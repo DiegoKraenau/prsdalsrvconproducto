@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.grupogloria.prsdalsrvconproducto.registration.aop.logging.LogMethodCall;
 import com.grupogloria.prsdalsrvconproducto.registration.constants.GlobalConstants;
-import com.grupogloria.prsdalsrvconproducto.registration.domain.MaterialCategoryEntity;
+import com.grupogloria.prsdalsrvconproducto.registration.domain.MaterialEntity;
 import com.grupogloria.prsdalsrvconproducto.registration.exception.SqlException;
-import com.grupogloria.prsdalsrvconproducto.registration.service.MaterialCategoryService;
+import com.grupogloria.prsdalsrvconproducto.registration.service.MaterialService;
 import com.grupogloria.prsdalsrvconproducto.registration.util.CustomResponse;
 import com.grupogloria.prsdalsrvconproducto.registration.util.Util;
 
@@ -25,19 +25,19 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin
-@Api(tags = "Material Category API")
-public class MaterialCategoryController {
+@Api(tags = "Material API")
+public class MaterialController {
 
     @Autowired
-    private MaterialCategoryService materialCategoryService;
+    private MaterialService materialService;
 
     @LogMethodCall
-    @GetMapping("/material-category/find-all")
-    public CustomResponse<List<MaterialCategoryEntity>> getCategories(HttpServletRequest request)
+    @GetMapping("/material/find-all")
+    public CustomResponse<List<MaterialEntity>> getMaterials(HttpServletRequest request)
             throws SqlException, Exception {
-        List<MaterialCategoryEntity> categories;
+        List<MaterialEntity> materials;
         try {
-            categories = materialCategoryService.getAllCategories();
+            materials = materialService.getAllMaterials();
         } catch (Exception e) {
             return new CustomResponse<>(
                     GlobalConstants.INTERNAL_ERROR,
@@ -52,7 +52,7 @@ public class MaterialCategoryController {
                 "Listado de categorias",
                 request.getHeader(GlobalConstants.ID_TRANSACTION),
                 Util.getDate(),
-                categories);
+                materials);
     }
 
 }
