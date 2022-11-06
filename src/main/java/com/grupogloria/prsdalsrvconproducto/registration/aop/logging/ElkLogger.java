@@ -13,10 +13,6 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
-import com.grupogloria.prsdalsrvconproducto.registration.aop.logging.ElkPayload;
-import com.grupogloria.prsdalsrvconproducto.registration.aop.logging.JSONUtil;
-
-
 @Aspect
 @Component
 public class ElkLogger {	

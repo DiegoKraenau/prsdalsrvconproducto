@@ -17,15 +17,16 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Data
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "categoria_material")
 @JsonInclude(Include.NON_EMPTY)
-public class MaterialCategoryEntity {
+public class MaterialCategoryEntity extends AuditEntity {
 
     @Id
     @Column(name = "cod_catmaterial", nullable = false)

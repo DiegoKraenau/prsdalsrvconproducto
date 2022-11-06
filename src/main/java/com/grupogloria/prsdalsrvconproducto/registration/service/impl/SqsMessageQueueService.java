@@ -6,7 +6,6 @@ import org.springframework.cloud.aws.messaging.core.SqsMessageHeaders;
 import org.springframework.stereotype.Component;
 
 import com.amazonaws.services.sqs.AmazonSQSAsync;
-import com.grupogloria.prsdalsrvconproducto.registration.domain.QueueMessage;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,10 +21,11 @@ public class SqsMessageQueueService {
     }
 
     public void sendMessage(String queueName, String queueMessage) {
-    	String id = UUID.randomUUID().toString().replace("-", "");
+        String id = UUID.randomUUID().toString().replace("-", "");
         Map<String, Object> headers = new HashMap<>();
         headers.put(SqsMessageHeaders.SQS_GROUP_ID_HEADER, UUID.randomUUID().toString().replace("-", ""));
-        headers.put(SqsMessageHeaders.SQS_DEDUPLICATION_ID_HEADER, id.concat("-").concat(UUID.randomUUID().toString().replace("-", "")));
+        headers.put(SqsMessageHeaders.SQS_DEDUPLICATION_ID_HEADER,
+                id.concat("-").concat(UUID.randomUUID().toString().replace("-", "")));
         queueMessagingTemplate.convertAndSend(queueName, queueMessage, headers);
     }
 }
