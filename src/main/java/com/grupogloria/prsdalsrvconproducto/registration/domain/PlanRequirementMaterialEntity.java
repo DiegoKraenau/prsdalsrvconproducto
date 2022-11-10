@@ -3,7 +3,6 @@ package com.grupogloria.prsdalsrvconproducto.registration.domain;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;

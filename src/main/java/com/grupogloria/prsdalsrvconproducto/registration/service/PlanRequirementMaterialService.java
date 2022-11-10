@@ -4,12 +4,12 @@ import java.util.List;
 
 import com.grupogloria.prsdalsrvconproducto.registration.domain.PlanRequirementMaterialEntity;
 import com.grupogloria.prsdalsrvconproducto.registration.exception.SqlException;
-import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.RegisterPlanRequirementMaterialDto;
+import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.RequestPlanRequirementMaterialDto;
 import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.ResponsePlanRequirementMaterialDto;
 
 public interface PlanRequirementMaterialService {
 
-    PlanRequirementMaterialEntity registerPlanRequirementMaterial(RegisterPlanRequirementMaterialDto registerDto)
+    PlanRequirementMaterialEntity registerPlanRequirementMaterial(RequestPlanRequirementMaterialDto registerDto)
             throws SqlException, Exception;
 
     List<ResponsePlanRequirementMaterialDto> getAllPlanRequirementMaterials() throws SqlException, Exception;

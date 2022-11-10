@@ -19,7 +19,7 @@ import com.grupogloria.prsdalsrvconproducto.registration.exception.SqlException;
 import com.grupogloria.prsdalsrvconproducto.registration.repository.MaterialRepository;
 import com.grupogloria.prsdalsrvconproducto.registration.repository.PlanRequirementMaterialRepository;
 import com.grupogloria.prsdalsrvconproducto.registration.service.PlanRequirementMaterialService;
-import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.RegisterPlanRequirementMaterialDto;
+import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.RequestPlanRequirementMaterialDto;
 import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.ResponsePlanRequirementMaterialDto;
 
 import lombok.extern.slf4j.Slf4j;
@@ -38,7 +38,7 @@ public class PlanRequirementMaterialServiceImpl implements PlanRequirementMateri
     private ModelMapper modelMapper;
 
     @Override
-    public PlanRequirementMaterialEntity registerPlanRequirementMaterial(RegisterPlanRequirementMaterialDto registerDto)
+    public PlanRequirementMaterialEntity registerPlanRequirementMaterial(RequestPlanRequirementMaterialDto registerDto)
             throws SqlException, Exception {
 
         MaterialEntity material = materialRepository

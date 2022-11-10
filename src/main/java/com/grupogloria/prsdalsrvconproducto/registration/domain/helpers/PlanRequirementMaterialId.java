@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.grupogloria.prsdalsrvconproducto.registration.domain.MaterialEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

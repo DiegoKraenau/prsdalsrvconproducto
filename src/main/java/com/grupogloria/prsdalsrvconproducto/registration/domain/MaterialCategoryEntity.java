@@ -14,7 +14,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -38,9 +37,5 @@ public class MaterialCategoryEntity extends AuditEntity {
 
     @Column(name = "flg_anulado", nullable = false)
     private Boolean canceledFlag;
-
-    @Column(name = "fec_creacion", nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private Timestamp creationDate;
 
 }

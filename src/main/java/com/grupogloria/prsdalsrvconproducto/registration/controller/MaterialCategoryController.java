@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.grupogloria.prsdalsrvconproducto.registration.aop.logging.LogMethodCall;
 import com.grupogloria.prsdalsrvconproducto.registration.constants.GlobalConstants;
-import com.grupogloria.prsdalsrvconproducto.registration.domain.MaterialCategoryEntity;
 import com.grupogloria.prsdalsrvconproducto.registration.exception.SqlException;
 import com.grupogloria.prsdalsrvconproducto.registration.service.MaterialCategoryService;
 import com.grupogloria.prsdalsrvconproducto.registration.util.CustomResponse;
 import com.grupogloria.prsdalsrvconproducto.registration.util.Util;
+import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.ResponseMaterialCategoryDto;
 
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
@@ -33,9 +33,9 @@ public class MaterialCategoryController {
 
     @LogMethodCall
     @GetMapping("/material-category/find-all")
-    public CustomResponse<List<MaterialCategoryEntity>> getCategories(HttpServletRequest request)
+    public CustomResponse<List<ResponseMaterialCategoryDto>> getCategories(HttpServletRequest request)
             throws SqlException, Exception {
-        List<MaterialCategoryEntity> categories;
+        List<ResponseMaterialCategoryDto> categories;
         try {
             categories = materialCategoryService.getAllCategories();
         } catch (Exception e) {

@@ -19,7 +19,7 @@ import com.grupogloria.prsdalsrvconproducto.registration.exception.SqlException;
 import com.grupogloria.prsdalsrvconproducto.registration.service.PlanRequirementMaterialService;
 import com.grupogloria.prsdalsrvconproducto.registration.util.CustomResponse;
 import com.grupogloria.prsdalsrvconproducto.registration.util.Util;
-import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.RegisterPlanRequirementMaterialDto;
+import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.RequestPlanRequirementMaterialDto;
 import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.ResponsePlanRequirementMaterialDto;
 
 import io.swagger.annotations.Api;
@@ -39,7 +39,7 @@ public class PlanRequirementMaterialController {
     @LogMethodCall
     @PostMapping("/plan-requirement-material")
     public CustomResponse<PlanRequirementMaterialEntity> registerPlanRequirementMaterial(
-            @Valid @RequestBody RegisterPlanRequirementMaterialDto dto,
+            @Valid @RequestBody RequestPlanRequirementMaterialDto dto,
             HttpServletRequest request)
             throws SqlException, Exception {
         PlanRequirementMaterialEntity planRequirementMaterialRegistered;
