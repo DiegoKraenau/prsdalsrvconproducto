@@ -1,5 +1,6 @@
 package com.grupogloria.prsdalsrvconproducto.registration.service.impl;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,13 +56,15 @@ public class PlanRequirementMaterialServiceImpl implements PlanRequirementMateri
         // .orElseThrow(() -> new Exception("Plan Requirement exits"));
 
         try {
+            Calendar cal = Calendar.getInstance();
+            cal.setTimeInMillis(registerDto.getDate().getTime());
 
             PlanRequirementMaterialEntity planRequirementMaterialRegistered = planRequirementMaterialRepository
                     .save(PlanRequirementMaterialEntity.builder()
                             .material(material)
                             .date(registerDto.getDate())
-                            .year(registerDto.getDate().getYear())
-                            .month(String.valueOf(registerDto.getDate().getMonth()))
+                            .year(cal.get(Calendar.YEAR))
+                            .month(String.valueOf(cal.get(Calendar.MONTH) + 1))
                             .amount(registerDto.getAmount())
                             .creationDate(registerDto.getCreationDate())
                             .updateDate(registerDto.getUpdateDate())
