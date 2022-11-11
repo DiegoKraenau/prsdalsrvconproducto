@@ -9,12 +9,10 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Fetch;
+import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -31,38 +29,38 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "material")
+@Table(name = "center")
 @JsonInclude(Include.NON_EMPTY)
-public class MaterialEntity extends AuditEntity {
+public class CenterEntity extends AuditEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_material")
-    private Long id;
+    @Column(name = "id_centro", nullable = false)
+    @Length(max = 4)
+    private String idCenter;
 
-    @Column(name = "nombre_largo", nullable = false)
-    private String largeName;
-
-    @Column(name = "nombre_corto", nullable = false)
-    private String shortName;
-
-    @Column(name = "presentacion", nullable = false)
-    private String presentation;
+    @Column(name = "centro", nullable = false)
+    @Length(max = 200)
+    private String center;
 
     @Column(name = "flg_anulado", nullable = false)
     private Boolean canceledFlag;
 
-    @Column(name = "dias_vencimiento", nullable = false)
-    private Integer expiredDays;
+    @Column(name = "id_pais", nullable = false)
+    @Length(max = 4)
+    private String idCountry;
 
-    @Column(name = "tipo_vencimiento", nullable = false)
-    private String maturityType;
+    @Column(name = "id_departamento", nullable = false)
+    private Integer idDepartment;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cod_catmaterial")
-    private MaterialCategoryEntity materialCategory;
+    @Column(name = "latitud", nullable = false)
+    @Length(max = 50)
+    private String latitude;
 
-    @OneToMany(mappedBy = "material", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @Column(name = "longitud", nullable = false)
+    @Length(max = 50)
+    private String longitude;
+
+    @OneToMany(mappedBy = "center", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonBackReference
     private List<CenterMaterialEntity> centerMaterials;
 

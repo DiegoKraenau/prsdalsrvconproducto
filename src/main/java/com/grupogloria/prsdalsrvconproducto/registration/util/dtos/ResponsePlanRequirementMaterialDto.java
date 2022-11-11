@@ -25,4 +25,8 @@ public class ResponsePlanRequirementMaterialDto {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Timestamp date;
+
+    private String centerId;
+
+    private String centerName;
 }

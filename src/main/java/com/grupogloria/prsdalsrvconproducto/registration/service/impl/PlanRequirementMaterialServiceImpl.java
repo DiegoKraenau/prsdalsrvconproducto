@@ -13,10 +13,12 @@ import org.springframework.transaction.CannotCreateTransactionException;
 
 import com.google.common.util.concurrent.ExecutionError;
 import com.grupogloria.prsdalsrvconproducto.registration.aop.logging.ElkLogger;
+import com.grupogloria.prsdalsrvconproducto.registration.domain.CenterEntity;
 import com.grupogloria.prsdalsrvconproducto.registration.domain.MaterialEntity;
 import com.grupogloria.prsdalsrvconproducto.registration.domain.PlanRequirementMaterialEntity;
 import com.grupogloria.prsdalsrvconproducto.registration.domain.helpers.PlanRequirementMaterialId;
 import com.grupogloria.prsdalsrvconproducto.registration.exception.SqlException;
+import com.grupogloria.prsdalsrvconproducto.registration.repository.CenterRepository;
 import com.grupogloria.prsdalsrvconproducto.registration.repository.MaterialRepository;
 import com.grupogloria.prsdalsrvconproducto.registration.repository.PlanRequirementMaterialRepository;
 import com.grupogloria.prsdalsrvconproducto.registration.service.PlanRequirementMaterialService;
@@ -36,6 +38,9 @@ public class PlanRequirementMaterialServiceImpl implements PlanRequirementMateri
     private MaterialRepository materialRepository;
 
     @Autowired
+    private CenterRepository centerRepository;
+
+    @Autowired
     private ModelMapper modelMapper;
 
     @Override
@@ -47,9 +52,14 @@ public class PlanRequirementMaterialServiceImpl implements PlanRequirementMateri
                 .orElseThrow(() -> new Exception("Material not found with id : " +
                         registerDto.getMaterialId()));
 
+        CenterEntity center = centerRepository
+                .findById(registerDto.getCenterId())
+                .orElseThrow(() -> new Exception("Center not found with id : " +
+                        registerDto.getCenterId()));
+
         if (planRequirementMaterialRepository
                 .findById(PlanRequirementMaterialId.builder().material(registerDto.getMaterialId())
-                        .date(registerDto.getDate()).build())
+                        .date(registerDto.getDate()).center(center.getIdCenter()).build())
                 .isPresent()) {
             throw new Exception("Plan Requirement Material exits");
         }
@@ -73,6 +83,7 @@ public class PlanRequirementMaterialServiceImpl implements PlanRequirementMateri
                             .teamCreation(registerDto.getTeamCreation())
                             .teamUpdate(registerDto.getTeamUpdate())
                             .canceledFlag(false)
+                            .center(center)
                             .build());
 
             // ObjectMapper mapper = new ObjectMapper();
@@ -106,6 +117,8 @@ public class PlanRequirementMaterialServiceImpl implements PlanRequirementMateri
                                 planRequirementMaterial.getMaterial().getMaterialCategory().getCodCatMaterial());
                         res.setProductName(planRequirementMaterial.getMaterial().getShortName());
                         res.setProductId(planRequirementMaterial.getMaterial().getId());
+                        res.setCenterId(planRequirementMaterial.getCenter().getIdCenter());
+                        res.setCenterName(planRequirementMaterial.getCenter().getCenter());
 
                         return res;
                     })

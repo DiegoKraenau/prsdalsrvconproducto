@@ -12,6 +12,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.grupogloria.prsdalsrvconproducto.registration.domain.helpers.PlanRequirementMaterialId;
 
@@ -33,12 +34,19 @@ public class PlanRequirementMaterialEntity extends AuditEntity {
     @Id
     @ManyToOne
     @JoinColumn(name = "id_material", nullable = false)
+    @JsonManagedReference
     private MaterialEntity material;
 
     @Id
     @Column(name = "fecha", nullable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Timestamp date;
+
+    @Id
+    @ManyToOne
+    @JoinColumn(name = "id_centro", nullable = false)
+    @JsonManagedReference
+    private CenterEntity center;
 
     @Column(name = "anio", nullable = false)
     private Integer year;
