@@ -14,8 +14,8 @@ public class ResponseMaterialCategoryDto {
     // @Length(min = 3, max = 3)
     private String codCatMaterial;
 
-    private String materialCategory;
+    private String categoriaMaterial;
 
-    private Boolean canceledFlag;
+    private Boolean flgAnulado;
 
 }

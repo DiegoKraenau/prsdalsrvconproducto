@@ -40,23 +40,23 @@ public class CenterServiceImpl implements CenterService {
                     .stream()
                     .map(center -> {
                         ResponseCenterDto res = modelMapper.map(center, ResponseCenterDto.class);
-                        res.setMaterials(getMaterials(center));
+                        res.setMateriales(getMaterials(center));
                         return res;
                     })
                     .collect(Collectors.toList());
 
         } catch (CannotCreateTransactionException | JDBCConnectionException ex) {
             ElkLogger.log(Level.ERROR, ElkLogger.getStackTrace(ex), this.getClass().getName(), ex);
-            throw new SqlException("Connection Falied Please Try Later");
+            throw new SqlException("Conexion fallida. Por favor probar mas tarde.");
         } catch (Exception e) {
             ElkLogger.log(Level.ERROR, ElkLogger.getStackTrace(e), this.getClass().getName(), e);
-            throw new SqlException("Data Issue Please Try Later");
+            throw new SqlException("Error de data. Por favor probar mas tarde.");
         }
     }
 
     private List<ResponseMaterialDto> getMaterials(CenterEntity center) {
 
-        return center.getCenterMaterials()
+        return center.getCentroMateriales()
                 .stream()
                 .map(centerMaterial -> modelMapper.map(centerMaterial.getMaterial(), ResponseMaterialDto.class))
                 .collect(Collectors.toList());

@@ -49,7 +49,7 @@ public class MaterialController {
         return new CustomResponse<>(
                 GlobalConstants.OK,
                 Util.getStatusCode(GlobalConstants.OK),
-                "Listado de categorias",
+                "Listado de Material",
                 request.getHeader(GlobalConstants.ID_TRANSACTION),
                 Util.getDate(),
                 materials);

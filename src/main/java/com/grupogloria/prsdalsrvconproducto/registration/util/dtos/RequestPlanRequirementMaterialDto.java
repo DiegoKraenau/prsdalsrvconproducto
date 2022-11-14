@@ -21,13 +21,13 @@ public class RequestPlanRequirementMaterialDto extends RequestAuditDto {
     private Long materialId;
 
     @NotNull
-    private Integer amount;
+    private Integer cantidad;
 
     @NotNull
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private Timestamp date;
+    private Timestamp fecha;
 
     @NotNull
-    private String centerId;
+    private String centroId;
 
 }

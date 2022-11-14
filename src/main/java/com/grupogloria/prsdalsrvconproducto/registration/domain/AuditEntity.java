@@ -25,21 +25,21 @@ public class AuditEntity implements Serializable {
 
     @Column(name = "fec_creacion", nullable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private Timestamp creationDate;
+    private Timestamp fecCreacion;
 
     @Column(name = "fec_actualizacion", nullable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private Timestamp updateDate;
+    private Timestamp fecActualizacion;
 
     @Column(name = "usu_creacion", nullable = false)
-    private String userCreation;
+    private String usuCreacion;
 
     @Column(name = "usu_actualizacion", nullable = false)
-    private String userUpdate;
+    private String usuActualizacion;
 
     @Column(name = "equipo_creacion", nullable = false)
-    private String teamCreation;
+    private String equipoCreacion;
 
     @Column(name = "equipo_actualizacion", nullable = false)
-    private String teamUpdate;
+    private String equipoActualizacion;
 }

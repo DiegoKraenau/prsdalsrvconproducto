@@ -18,25 +18,25 @@ public class RequestAuditDto {
 
     @NotNull
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private Timestamp creationDate;
+    private Timestamp fecCreacion;
 
     @NotNull
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private Timestamp updateDate;
+    private Timestamp fecActualizacion;
 
     @NotNull
     @NotEmpty
-    private String userCreation;
+    private String usuCreacion;
 
     @NotNull
     @NotEmpty
-    private String userUpdate;
+    private String usuActualizacion;
 
     @NotNull
     @NotEmpty
-    private String teamCreation;
+    private String equipoCreacion;
 
     @NotNull
     @NotEmpty
-    private String teamUpdate;
+    private String equipoActualizacion;
 }

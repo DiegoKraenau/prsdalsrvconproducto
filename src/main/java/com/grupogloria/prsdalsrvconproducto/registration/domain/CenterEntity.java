@@ -29,39 +29,39 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "center")
+@Table(name = "centro")
 @JsonInclude(Include.NON_EMPTY)
 public class CenterEntity extends AuditEntity {
 
     @Id
     @Column(name = "id_centro", nullable = false)
     @Length(max = 4)
-    private String idCenter;
+    private String idCentro;
 
     @Column(name = "centro", nullable = false)
     @Length(max = 200)
-    private String center;
+    private String centro;
 
     @Column(name = "flg_anulado", nullable = false)
-    private Boolean canceledFlag;
+    private Boolean flgAnulado;
 
     @Column(name = "id_pais", nullable = false)
     @Length(max = 4)
-    private String idCountry;
+    private String idPais;
 
     @Column(name = "id_departamento", nullable = false)
-    private Integer idDepartment;
+    private Integer idDepartmento;
 
     @Column(name = "latitud", nullable = false)
     @Length(max = 50)
-    private String latitude;
+    private String latitud;
 
     @Column(name = "longitud", nullable = false)
     @Length(max = 50)
-    private String longitude;
+    private String longitud;
 
-    @OneToMany(mappedBy = "center", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "centro", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonBackReference
-    private List<CenterMaterialEntity> centerMaterials;
+    private List<CenterMaterialEntity> centroMateriales;
 
 }

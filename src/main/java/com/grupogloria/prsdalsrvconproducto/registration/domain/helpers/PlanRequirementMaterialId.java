@@ -19,7 +19,7 @@ public class PlanRequirementMaterialId implements Serializable {
     private Long material;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private Timestamp date;
+    private Timestamp fecha;
 
-    private String center;
+    private String centro;
 }

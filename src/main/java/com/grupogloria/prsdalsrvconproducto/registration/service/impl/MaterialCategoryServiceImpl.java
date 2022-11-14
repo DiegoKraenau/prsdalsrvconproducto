@@ -41,10 +41,10 @@ public class MaterialCategoryServiceImpl implements MaterialCategoryService {
 
         } catch (CannotCreateTransactionException | JDBCConnectionException ex) {
             ElkLogger.log(Level.ERROR, ElkLogger.getStackTrace(ex), this.getClass().getName(), ex);
-            throw new SqlException("Connection Falied Please Try Later");
+            throw new SqlException("Conexion fallida. Por favor probar mas tarde.");
         } catch (Exception e) {
             ElkLogger.log(Level.ERROR, ElkLogger.getStackTrace(e), this.getClass().getName(), e);
-            throw new SqlException("Data Issue Please Try Later");
+            throw new SqlException("Error de data. Por favor probar mas tarde.");
         }
     }
 

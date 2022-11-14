@@ -13,9 +13,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ResponseCenterDto {
 
-    private String idCenter;
+    private String idCentro;
 
-    private String center;
+    private String centro;
 
-    private List<ResponseMaterialDto> materials;
+    private List<ResponseMaterialDto> materiales;
 }

@@ -32,9 +32,9 @@ public class MaterialCategoryEntity extends AuditEntity {
     private String codCatMaterial;
 
     @Column(name = "categoria_material", nullable = false)
-    private String materialCategory;
+    private String categoriaMaterial;
 
     @Column(name = "flg_anulado", nullable = false)
-    private Boolean canceledFlag;
+    private Boolean flgAnulado;
 
 }

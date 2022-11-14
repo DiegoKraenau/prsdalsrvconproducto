@@ -33,7 +33,7 @@ public class CenterMaterialEntity extends AuditEntity {
     @Id
     @ManyToOne
     @JoinColumn(name = "id_centro", nullable = false)
-    private CenterEntity center;
+    private CenterEntity centro;
 
     @Id
     @ManyToOne
