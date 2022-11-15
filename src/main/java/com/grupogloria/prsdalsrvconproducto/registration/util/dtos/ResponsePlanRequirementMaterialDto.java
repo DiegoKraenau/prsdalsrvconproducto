@@ -15,18 +15,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ResponsePlanRequirementMaterialDto {
 
-    private Long productId;
+    private Long productoId;
 
-    private String productName;
+    private String nombreProducto;
 
-    private String productFamily;
+    private String familiaProducto;
 
-    private Integer amount;
+    private Integer cantidad;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private Timestamp date;
+    private Timestamp fecha;
 
-    private String centerId;
+    private String centroId;
 
-    private String centerName;
+    private String nombreCentro;
 }

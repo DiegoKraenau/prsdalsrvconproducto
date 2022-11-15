@@ -40,23 +40,23 @@ public class PlanRequirementMaterialEntity extends AuditEntity {
     @Id
     @Column(name = "fecha", nullable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private Timestamp date;
+    private Timestamp fecha;
 
     @Id
     @ManyToOne
     @JoinColumn(name = "id_centro", nullable = false)
     @JsonManagedReference
-    private CenterEntity center;
+    private CenterEntity centro;
 
     @Column(name = "anio", nullable = false)
-    private Integer year;
+    private Integer anio;
 
     @Column(name = "cod_mes", nullable = false)
-    private String month;
+    private String codMes;
 
     @Column(name = "cantidad", nullable = false)
-    private Integer amount;
+    private Integer cantidad;
 
     @Column(name = "flg_anulado", nullable = false)
-    private Boolean canceledFlag;
+    private Boolean flgAnulado;
 }

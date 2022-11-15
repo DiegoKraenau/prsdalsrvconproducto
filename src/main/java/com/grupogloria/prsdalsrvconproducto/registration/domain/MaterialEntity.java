@@ -39,29 +39,29 @@ public class MaterialEntity extends AuditEntity {
     private Long id;
 
     @Column(name = "nombre_largo", nullable = false)
-    private String largeName;
+    private String nombreLargo;
 
     @Column(name = "nombre_corto", nullable = false)
-    private String shortName;
+    private String nombreCorto;
 
     @Column(name = "presentacion", nullable = false)
-    private String presentation;
+    private String presentacion;
 
     @Column(name = "flg_anulado", nullable = false)
-    private Boolean canceledFlag;
+    private Boolean flgAnulado;
 
     @Column(name = "dias_vencimiento", nullable = false)
-    private Integer expiredDays;
+    private Integer diasVencimiento;
 
     @Column(name = "tipo_vencimiento", nullable = false)
-    private String maturityType;
+    private String tipoVencimiento;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cod_catmaterial")
-    private MaterialCategoryEntity materialCategory;
+    private MaterialCategoryEntity categoriaMaterial;
 
     @OneToMany(mappedBy = "material", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonBackReference
-    private List<CenterMaterialEntity> centerMaterials;
+    private List<CenterMaterialEntity> centroMateriales;
 
 }

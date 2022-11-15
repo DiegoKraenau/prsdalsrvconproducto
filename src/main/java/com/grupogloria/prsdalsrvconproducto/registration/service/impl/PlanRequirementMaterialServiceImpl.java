@@ -49,41 +49,41 @@ public class PlanRequirementMaterialServiceImpl implements PlanRequirementMateri
 
         MaterialEntity material = materialRepository
                 .findById(registerDto.getMaterialId())
-                .orElseThrow(() -> new Exception("Material not found with id : " +
+                .orElseThrow(() -> new Exception("Material no encontrado con el id : " +
                         registerDto.getMaterialId()));
 
         CenterEntity center = centerRepository
-                .findById(registerDto.getCenterId())
-                .orElseThrow(() -> new Exception("Center not found with id : " +
-                        registerDto.getCenterId()));
+                .findById(registerDto.getCentroId())
+                .orElseThrow(() -> new Exception("Centro no encontrado con el id : " +
+                        registerDto.getCentroId()));
 
         if (planRequirementMaterialRepository
                 .findById(PlanRequirementMaterialId.builder().material(registerDto.getMaterialId())
-                        .date(registerDto.getDate()).center(center.getIdCenter()).build())
+                        .fecha(registerDto.getFecha()).centro(center.getIdCentro()).build())
                 .isPresent()) {
-            throw new Exception("Plan Requirement Material exits");
+            throw new Exception("Plan de Requerimiento de Material existe");
         }
         // .orElseThrow(() -> new Exception("Plan Requirement exits"));
 
         try {
             Calendar cal = Calendar.getInstance();
-            cal.setTimeInMillis(registerDto.getDate().getTime());
+            cal.setTimeInMillis(registerDto.getFecha().getTime());
 
             PlanRequirementMaterialEntity planRequirementMaterialRegistered = planRequirementMaterialRepository
                     .save(PlanRequirementMaterialEntity.builder()
                             .material(material)
-                            .date(registerDto.getDate())
-                            .year(cal.get(Calendar.YEAR))
-                            .month(String.valueOf(cal.get(Calendar.MONTH) + 1))
-                            .amount(registerDto.getAmount())
-                            .creationDate(registerDto.getCreationDate())
-                            .updateDate(registerDto.getUpdateDate())
-                            .userCreation(registerDto.getUserCreation())
-                            .userUpdate(registerDto.getUserUpdate())
-                            .teamCreation(registerDto.getTeamCreation())
-                            .teamUpdate(registerDto.getTeamUpdate())
-                            .canceledFlag(false)
-                            .center(center)
+                            .fecha(registerDto.getFecha())
+                            .anio(cal.get(Calendar.YEAR))
+                            .codMes(String.valueOf(cal.get(Calendar.MONTH) + 1))
+                            .cantidad(registerDto.getCantidad())
+                            .fecCreacion(registerDto.getFecCreacion())
+                            .fecActualizacion(registerDto.getFecActualizacion())
+                            .usuCreacion(registerDto.getUsuCreacion())
+                            .usuActualizacion(registerDto.getUsuActualizacion())
+                            .equipoCreacion(registerDto.getEquipoCreacion())
+                            .equipoActualizacion(registerDto.getEquipoActualizacion())
+                            .flgAnulado(false)
+                            .centro(center)
                             .build());
 
             // ObjectMapper mapper = new ObjectMapper();
@@ -93,7 +93,7 @@ public class PlanRequirementMaterialServiceImpl implements PlanRequirementMateri
 
         } catch (CannotCreateTransactionException | JDBCConnectionException ex) {
             ElkLogger.log(Level.ERROR, ElkLogger.getStackTrace(ex), this.getClass().getName(), ex);
-            throw new SqlException("Connection Falied Please Try Later");
+            throw new SqlException("Conexion fallida. Por favor probar mas tarde.");
         } catch (Exception e) {
             ElkLogger.log(Level.ERROR, ElkLogger.getStackTrace(e), this.getClass().getName(), e);
             throw new Exception(e.getMessage());
@@ -113,12 +113,12 @@ public class PlanRequirementMaterialServiceImpl implements PlanRequirementMateri
                         ResponsePlanRequirementMaterialDto res = modelMapper.map(planRequirementMaterial,
                                 ResponsePlanRequirementMaterialDto.class);
 
-                        res.setProductFamily(
-                                planRequirementMaterial.getMaterial().getMaterialCategory().getCodCatMaterial());
-                        res.setProductName(planRequirementMaterial.getMaterial().getShortName());
-                        res.setProductId(planRequirementMaterial.getMaterial().getId());
-                        res.setCenterId(planRequirementMaterial.getCenter().getIdCenter());
-                        res.setCenterName(planRequirementMaterial.getCenter().getCenter());
+                        res.setFamiliaProducto(
+                                planRequirementMaterial.getMaterial().getCategoriaMaterial().getCodCatMaterial());
+                        res.setNombreProducto(planRequirementMaterial.getMaterial().getNombreCorto());
+                        res.setProductoId(planRequirementMaterial.getMaterial().getId());
+                        res.setCentroId(planRequirementMaterial.getCentro().getIdCentro());
+                        res.setNombreCentro(planRequirementMaterial.getCentro().getCentro());
 
                         return res;
                     })
@@ -126,10 +126,10 @@ public class PlanRequirementMaterialServiceImpl implements PlanRequirementMateri
 
         } catch (CannotCreateTransactionException | JDBCConnectionException ex) {
             ElkLogger.log(Level.ERROR, ElkLogger.getStackTrace(ex), this.getClass().getName(), ex);
-            throw new SqlException("Connection Falied Please Try Later");
+            throw new SqlException("Conexion fallida. Por favor probar mas tarde.");
         } catch (Exception e) {
             ElkLogger.log(Level.ERROR, ElkLogger.getStackTrace(e), this.getClass().getName(), e);
-            throw new SqlException("Data Issue Please Try Later");
+            throw new SqlException("Error de data. Por favor probar mas tarde.");
         }
     }
 

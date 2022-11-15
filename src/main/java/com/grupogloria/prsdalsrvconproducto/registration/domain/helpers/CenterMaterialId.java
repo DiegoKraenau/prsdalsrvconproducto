@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CenterMaterialId implements Serializable {
 
-    private String center;
+    private String centro;
 
     private Long material;
 }

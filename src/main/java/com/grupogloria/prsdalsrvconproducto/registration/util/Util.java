@@ -15,8 +15,8 @@ public class Util {
 
     public static int getStatusCode(Integer codigoRespuesta) {
         if (GlobalConstants.successfulRequests.contains(codigoRespuesta))
-            return 1;
-        return 0;
+            return 0;
+        return 1;
     }
 
     public static String getStatusCodeErrorDescription(Integer codigoRespuesta, String description) {

@@ -13,17 +13,17 @@ public class ResponseMaterialDto {
 
     private Long id;
 
-    private String largeName;
+    private String nombreLargo;
 
-    private String shortName;
+    private String nombreCorto;
 
-    private String presentation;
+    private String presentacion;
 
-    private Boolean canceledFlag;
+    private Boolean flgAnulado;
 
-    private Integer expiredDays;
+    private Integer diasVencimiento;
 
-    private String maturityType;
+    private String tipoVencimiento;
 
-    private ResponseMaterialCategoryDto materialCategory;
+    private ResponseMaterialCategoryDto categoriaMaterial;
 }

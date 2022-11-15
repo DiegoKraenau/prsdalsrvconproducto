@@ -49,7 +49,7 @@ public class CenterController {
         return new CustomResponse<>(
                 GlobalConstants.OK,
                 Util.getStatusCode(GlobalConstants.OK),
-                "Listado de categorias",
+                "Listado de Centros",
                 request.getHeader(GlobalConstants.ID_TRANSACTION),
                 Util.getDate(),
                 centers);
