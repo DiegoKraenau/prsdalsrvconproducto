@@ -64,4 +64,6 @@ public class MaterialEntity extends AuditEntity {
     @JsonBackReference
     private List<CenterMaterialEntity> centroMateriales;
 
+    //TODO: Falta hacer relacion con linea
+
 }

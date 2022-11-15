@@ -48,4 +48,22 @@ public class MaterialServiceImpl implements MaterialService {
         }
     }
 
+    @Override
+    public ResponseMaterialDto getMaterialById(Long id) throws SqlException, Exception {
+        MaterialEntity material = materialRepository
+                .findById(id)
+                .orElseThrow(() -> new Exception("Material no encontrado con el id : " +
+                        id));
+        try {
+            return modelMapper.map(material, ResponseMaterialDto.class);
+
+        } catch (CannotCreateTransactionException | JDBCConnectionException ex) {
+            ElkLogger.log(Level.ERROR, ElkLogger.getStackTrace(ex), this.getClass().getName(), ex);
+            throw new SqlException("Conexion fallida. Por favor probar mas tarde.");
+        } catch (Exception e) {
+            ElkLogger.log(Level.ERROR, ElkLogger.getStackTrace(e), this.getClass().getName(), e);
+            throw new SqlException("Error de data. Por favor probar mas tarde.");
+        }
+    }
+
 }

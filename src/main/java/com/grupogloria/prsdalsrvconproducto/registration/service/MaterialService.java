@@ -7,4 +7,6 @@ import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.ResponseMater
 
 public interface MaterialService {
     List<ResponseMaterialDto> getAllMaterials() throws SqlException, Exception;
+
+    ResponseMaterialDto getMaterialById(Long id) throws SqlException, Exception;
 }

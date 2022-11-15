@@ -33,3 +33,7 @@ INSERT INTO public.centro_material(
 INSERT INTO public.centro_material(
 	id_centro, id_material, fec_creacion, equipo_creacion, equipo_actualizacion, fec_actualizacion, usu_creacion, usu_actualizacion)
 	VALUES ('002', 2, '2022-06-21T00:00:00', 'eq1', 'eq1', '2022-06-21T00:00:00', 'usu1', 'usu1');	
+
+INSERT INTO public.linea(
+	id_linea, equipo_actualizacion, equipo_creacion, fec_actualizacion, fec_creacion, usu_actualizacion, usu_creacion, codificacion, descripcion, flg_anulado, flq_reproceso, id_centro, id_seccion_produccion, limite_inferior, limite_superior, linea, pst_trbjo, time_out_impresion)
+	VALUES (1, 'eq1', 'eq1', '2022-06-21T00:00:00', '2022-06-21T00:00:00', 'usu1', 'usu1', 1, 'descripcion', false, false, '002', 'SP', 10.2, 10.3, 'Linea 1', 'pst trabajo', 30);

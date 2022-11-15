@@ -3,6 +3,7 @@ package com.grupogloria.prsdalsrvconproducto.registration.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -33,12 +34,13 @@ public class CenterController {
 
     @LogMethodCall
     @GetMapping("/center/find-all")
-    public CustomResponse<List<ResponseCenterDto>> getCenters(HttpServletRequest request)
+    public CustomResponse<List<ResponseCenterDto>> getCenters(HttpServletRequest request, HttpServletResponse response)
             throws SqlException, Exception {
         List<ResponseCenterDto> centers;
         try {
             centers = centerService.getAllCenters();
         } catch (Exception e) {
+            response.setStatus(GlobalConstants.INTERNAL_ERROR);
             return new CustomResponse<>(
                     GlobalConstants.INTERNAL_ERROR,
                     Util.getStatusCode(GlobalConstants.INTERNAL_ERROR),

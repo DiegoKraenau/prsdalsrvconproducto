@@ -3,6 +3,7 @@ package com.grupogloria.prsdalsrvconproducto.registration.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -33,12 +34,14 @@ public class MaterialCategoryController {
 
     @LogMethodCall
     @GetMapping("/material-category/find-all")
-    public CustomResponse<List<ResponseMaterialCategoryDto>> getCategories(HttpServletRequest request)
+    public CustomResponse<List<ResponseMaterialCategoryDto>> getCategories(HttpServletRequest request,
+            HttpServletResponse response)
             throws SqlException, Exception {
         List<ResponseMaterialCategoryDto> categories;
         try {
             categories = materialCategoryService.getAllCategories();
         } catch (Exception e) {
+            response.setStatus(GlobalConstants.INTERNAL_ERROR);
             return new CustomResponse<>(
                     GlobalConstants.INTERNAL_ERROR,
                     Util.getStatusCode(GlobalConstants.INTERNAL_ERROR),
