@@ -1,7 +1,5 @@
 package com.grupogloria.prsdalsrvconproducto.registration.domain;
 
-import java.sql.Timestamp;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -10,11 +8,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.grupogloria.prsdalsrvconproducto.registration.domain.helpers.PlanRequirementMaterialId;
+import com.grupogloria.prsdalsrvconproducto.registration.domain.helpers.AlternativeUnitId;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,10 +23,10 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "plan_requerimiento_material")
+@Table(name = "unidad_alternativo")
 @JsonInclude(Include.NON_EMPTY)
-@IdClass(PlanRequirementMaterialId.class)
-public class PlanRequirementMaterialEntity extends AuditEntity {
+@IdClass(AlternativeUnitId.class)
+public class AlternativeUnitEntity {
 
     @Id
     @ManyToOne
@@ -38,29 +35,16 @@ public class PlanRequirementMaterialEntity extends AuditEntity {
     private MaterialEntity material;
 
     @Id
-    @Column(name = "fecha", nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private Timestamp fecha;
-
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "id_centro", nullable = false)
-    @JsonManagedReference
-    private CenterEntity centro;
-
-    @Id
     @ManyToOne
     @JoinColumn(name = "id_unidad_medida", nullable = false)
+    @JsonManagedReference
     private UnitMeasureEntity unidadMedida;
 
-    @Column(name = "anio", nullable = false)
-    private Integer anio;
+    @Column(name = "denominador", nullable = false)
+    private Long denominador;
 
-    @Column(name = "cod_mes", nullable = false)
-    private String codMes;
-
-    @Column(name = "cantidad", nullable = false)
-    private Integer cantidad;
+    @Column(name = "contador", nullable = false)
+    private Long Contador;
 
     @Column(name = "flg_anulado", nullable = false)
     private Boolean flgAnulado;

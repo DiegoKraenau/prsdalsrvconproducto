@@ -13,4 +13,7 @@ public interface PlanRequirementMaterialService {
             throws SqlException, Exception;
 
     List<ResponsePlanRequirementMaterialDto> getAllPlanRequirementMaterials() throws SqlException, Exception;
+
+    List<ResponsePlanRequirementMaterialDto> getAllPlanRequirementMaterialsByFilters(String fechaInicio, String fechaFin)
+            throws SqlException, Exception;
 }

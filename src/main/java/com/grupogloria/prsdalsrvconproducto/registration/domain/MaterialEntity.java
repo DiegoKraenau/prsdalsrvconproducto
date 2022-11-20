@@ -14,7 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -64,6 +63,10 @@ public class MaterialEntity extends AuditEntity {
     @JsonBackReference
     private List<CenterMaterialEntity> centroMateriales;
 
-    //TODO: Falta hacer relacion con linea
+    @OneToMany(mappedBy = "material", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonBackReference
+    private List<AlternativeUnitEntity> unidadMedidas;
+
+    // TODO: Falta hacer relacion con linea
 
 }

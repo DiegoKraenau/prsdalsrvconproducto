@@ -13,11 +13,11 @@ import org.springframework.transaction.CannotCreateTransactionException;
 import com.grupogloria.prsdalsrvconproducto.registration.aop.logging.ElkLogger;
 import com.grupogloria.prsdalsrvconproducto.registration.domain.CenterEntity;
 import com.grupogloria.prsdalsrvconproducto.registration.exception.SqlException;
-import com.grupogloria.prsdalsrvconproducto.registration.repository.CenterMaterialRepository;
 import com.grupogloria.prsdalsrvconproducto.registration.repository.CenterRepository;
 import com.grupogloria.prsdalsrvconproducto.registration.service.CenterService;
 import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.ResponseCenterDto;
 import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.ResponseMaterialDto;
+import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.UnitMeasureDto;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -58,7 +58,17 @@ public class CenterServiceImpl implements CenterService {
 
         return center.getCentroMateriales()
                 .stream()
-                .map(centerMaterial -> modelMapper.map(centerMaterial.getMaterial(), ResponseMaterialDto.class))
+                .map(centerMaterial -> {
+                    ResponseMaterialDto res = modelMapper.map(centerMaterial.getMaterial(), ResponseMaterialDto.class);
+
+                    List<UnitMeasureDto> unitsMeasure = centerMaterial.getMaterial().getUnidadMedidas()
+                            .stream()
+                            .map(unitMeasure -> modelMapper.map(unitMeasure, UnitMeasureDto.class))
+                            .collect(Collectors.toList());
+
+                    res.setUnidadMedidas(unitsMeasure);
+                    return res;
+                })
                 .collect(Collectors.toList());
 
     }

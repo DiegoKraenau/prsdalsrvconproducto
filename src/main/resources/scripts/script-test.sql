@@ -37,3 +37,11 @@ INSERT INTO public.centro_material(
 INSERT INTO public.linea(
 	id_linea, equipo_actualizacion, equipo_creacion, fec_actualizacion, fec_creacion, usu_actualizacion, usu_creacion, codificacion, descripcion, flg_anulado, flq_reproceso, id_centro, id_seccion_produccion, limite_inferior, limite_superior, linea, pst_trbjo, time_out_impresion)
 	VALUES (1, 'eq1', 'eq1', '2022-06-21T00:00:00', '2022-06-21T00:00:00', 'usu1', 'usu1', 1, 'descripcion', false, false, '002', 'SP', 10.2, 10.3, 'Linea 1', 'pst trabajo', 30);
+	
+INSERT INTO public.unidad_medida(
+	id_unidad_medida, equipo_actualizacion, equipo_creacion, fec_actualizacion, fec_creacion, usu_actualizacion, usu_creacion, unidad_medida, unidad_medida_larga)
+	VALUES ('U1', 'eq1', 'eq1', '2022-06-21T00:00:00', '2022-06-21T00:00:00', 'usu1', 'usu1', 'kg', 'kilogramo');
+
+INSERT INTO public.unidad_alternativo(
+	id_material, id_unidad_medida, contador, denominador, flg_anulado)
+	VALUES (1, 'U1', 1, 1, false);

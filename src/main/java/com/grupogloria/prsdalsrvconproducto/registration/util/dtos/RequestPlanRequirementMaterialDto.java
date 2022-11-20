@@ -30,4 +30,7 @@ public class RequestPlanRequirementMaterialDto extends RequestAuditDto {
     @NotNull
     private String centroId;
 
+    @NotNull
+    private String unidadMedidaId;
+
 }

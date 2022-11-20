@@ -29,4 +29,6 @@ public class ResponsePlanRequirementMaterialDto {
     private String centroId;
 
     private String nombreCentro;
+
+    private String unidadMedida;
 }

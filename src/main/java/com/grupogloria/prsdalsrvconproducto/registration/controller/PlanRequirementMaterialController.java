@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.grupogloria.prsdalsrvconproducto.registration.aop.logging.LogMethodCall;
@@ -85,6 +86,35 @@ public class PlanRequirementMaterialController {
                 GlobalConstants.OK,
                 Util.getStatusCode(GlobalConstants.OK),
                 "Listado de Plan Requerimiento Material",
+                request.getHeader(GlobalConstants.ID_TRANSACTION),
+                Util.getDate(),
+                planRequirementMaterials);
+    }
+
+    @LogMethodCall
+    @GetMapping("/plan-requirement-material/find-by-filters")
+    public CustomResponse<List<ResponsePlanRequirementMaterialDto>> getPlanRequirementMaterialsByFilters(
+            @RequestParam(name = "fechaInicio") String startDate,
+            @RequestParam(name = "fechaFin") String endDate,
+            HttpServletRequest request, HttpServletResponse response)
+            throws SqlException, Exception {
+        List<ResponsePlanRequirementMaterialDto> planRequirementMaterials;
+        try {
+            planRequirementMaterials = planRequirementMaterialService.getAllPlanRequirementMaterialsByFilters(startDate,
+                    endDate);
+        } catch (Exception e) {
+            response.setStatus(GlobalConstants.INTERNAL_ERROR);
+            return new CustomResponse<>(
+                    GlobalConstants.INTERNAL_ERROR,
+                    Util.getStatusCode(GlobalConstants.INTERNAL_ERROR),
+                    Util.getStatusCodeErrorDescription(GlobalConstants.INTERNAL_ERROR, e.getMessage()),
+                    request.getHeader(GlobalConstants.ID_TRANSACTION),
+                    Util.getDate());
+        }
+        return new CustomResponse<>(
+                GlobalConstants.OK,
+                Util.getStatusCode(GlobalConstants.OK),
+                "Listado de Plan Requerimiento Material con filtros",
                 request.getHeader(GlobalConstants.ID_TRANSACTION),
                 Util.getDate(),
                 planRequirementMaterials);

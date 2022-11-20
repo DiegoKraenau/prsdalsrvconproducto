@@ -16,11 +16,13 @@ import com.grupogloria.prsdalsrvconproducto.registration.aop.logging.ElkLogger;
 import com.grupogloria.prsdalsrvconproducto.registration.domain.CenterEntity;
 import com.grupogloria.prsdalsrvconproducto.registration.domain.MaterialEntity;
 import com.grupogloria.prsdalsrvconproducto.registration.domain.PlanRequirementMaterialEntity;
+import com.grupogloria.prsdalsrvconproducto.registration.domain.UnitMeasureEntity;
 import com.grupogloria.prsdalsrvconproducto.registration.domain.helpers.PlanRequirementMaterialId;
 import com.grupogloria.prsdalsrvconproducto.registration.exception.SqlException;
 import com.grupogloria.prsdalsrvconproducto.registration.repository.CenterRepository;
 import com.grupogloria.prsdalsrvconproducto.registration.repository.MaterialRepository;
 import com.grupogloria.prsdalsrvconproducto.registration.repository.PlanRequirementMaterialRepository;
+import com.grupogloria.prsdalsrvconproducto.registration.repository.UnitMeasureRepository;
 import com.grupogloria.prsdalsrvconproducto.registration.service.PlanRequirementMaterialService;
 import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.RequestPlanRequirementMaterialDto;
 import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.ResponsePlanRequirementMaterialDto;
@@ -41,6 +43,9 @@ public class PlanRequirementMaterialServiceImpl implements PlanRequirementMateri
     private CenterRepository centerRepository;
 
     @Autowired
+    private UnitMeasureRepository unitMeasureRepository;
+
+    @Autowired
     private ModelMapper modelMapper;
 
     @Override
@@ -57,9 +62,15 @@ public class PlanRequirementMaterialServiceImpl implements PlanRequirementMateri
                 .orElseThrow(() -> new Exception("Centro no encontrado con el id : " +
                         registerDto.getCentroId()));
 
+        UnitMeasureEntity unitMeasure = unitMeasureRepository
+                .findById(registerDto.getUnidadMedidaId())
+                .orElseThrow(() -> new Exception("Unidad de medida no encontrado con el id : " +
+                        registerDto.getUnidadMedidaId()));
+
         if (planRequirementMaterialRepository
                 .findById(PlanRequirementMaterialId.builder().material(registerDto.getMaterialId())
-                        .fecha(registerDto.getFecha()).centro(center.getIdCentro()).build())
+                        .fecha(registerDto.getFecha()).centro(center.getIdCentro())
+                        .unidadMedida(unitMeasure.getIdUnidadMedida()).build())
                 .isPresent()) {
             throw new Exception("Plan de Requerimiento de Material existe");
         }
@@ -84,6 +95,7 @@ public class PlanRequirementMaterialServiceImpl implements PlanRequirementMateri
                             .equipoActualizacion(registerDto.getEquipoActualizacion())
                             .flgAnulado(false)
                             .centro(center)
+                            .unidadMedida(unitMeasure)
                             .build());
 
             // ObjectMapper mapper = new ObjectMapper();
@@ -119,6 +131,41 @@ public class PlanRequirementMaterialServiceImpl implements PlanRequirementMateri
                         res.setProductoId(planRequirementMaterial.getMaterial().getId());
                         res.setCentroId(planRequirementMaterial.getCentro().getIdCentro());
                         res.setNombreCentro(planRequirementMaterial.getCentro().getCentro());
+                        res.setUnidadMedida(planRequirementMaterial.getUnidadMedida().getUnidadMedida());
+
+                        return res;
+                    })
+                    .collect(Collectors.toList());
+
+        } catch (CannotCreateTransactionException | JDBCConnectionException ex) {
+            ElkLogger.log(Level.ERROR, ElkLogger.getStackTrace(ex), this.getClass().getName(), ex);
+            throw new SqlException("Conexion fallida. Por favor probar mas tarde.");
+        } catch (Exception e) {
+            ElkLogger.log(Level.ERROR, ElkLogger.getStackTrace(e), this.getClass().getName(), e);
+            throw new SqlException("Error de data. Por favor probar mas tarde.");
+        }
+    }
+
+    @Override
+    public List<ResponsePlanRequirementMaterialDto> getAllPlanRequirementMaterialsByFilters(String fechaInicio, String fechaFin)
+            throws SqlException, Exception {
+        try {
+            List<PlanRequirementMaterialEntity> planRequirementMaterials = planRequirementMaterialRepository
+                    .findAllByFilters(fechaInicio, fechaFin);
+
+            return planRequirementMaterials
+                    .stream()
+                    .map(planRequirementMaterial -> {
+                        ResponsePlanRequirementMaterialDto res = modelMapper.map(planRequirementMaterial,
+                                ResponsePlanRequirementMaterialDto.class);
+
+                        res.setFamiliaProducto(
+                                planRequirementMaterial.getMaterial().getCategoriaMaterial().getCodCatMaterial());
+                        res.setNombreProducto(planRequirementMaterial.getMaterial().getNombreCorto());
+                        res.setProductoId(planRequirementMaterial.getMaterial().getId());
+                        res.setCentroId(planRequirementMaterial.getCentro().getIdCentro());
+                        res.setNombreCentro(planRequirementMaterial.getCentro().getCentro());
+                        res.setUnidadMedida(planRequirementMaterial.getUnidadMedida().getUnidadMedida());
 
                         return res;
                     })

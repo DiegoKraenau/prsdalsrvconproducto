@@ -1,5 +1,7 @@
 package com.grupogloria.prsdalsrvconproducto.registration.util.dtos;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,4 +28,6 @@ public class ResponseMaterialDto {
     private String tipoVencimiento;
 
     private ResponseMaterialCategoryDto categoriaMaterial;
+
+    private List<UnitMeasureDto> unidadMedidas;
 }
