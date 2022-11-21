@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +22,7 @@ import com.grupogloria.prsdalsrvconproducto.registration.exception.SqlException;
 import com.grupogloria.prsdalsrvconproducto.registration.service.PlanRequirementMaterialService;
 import com.grupogloria.prsdalsrvconproducto.registration.util.CustomResponse;
 import com.grupogloria.prsdalsrvconproducto.registration.util.Util;
+import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.EditPlanRequirementMaterialDto;
 import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.RequestPlanRequirementMaterialDto;
 import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.ResponsePlanRequirementMaterialDto;
 
@@ -118,6 +120,33 @@ public class PlanRequirementMaterialController {
                 request.getHeader(GlobalConstants.ID_TRANSACTION),
                 Util.getDate(),
                 planRequirementMaterials);
+    }
+
+    @LogMethodCall
+    @PutMapping("/plan-requirement-material/complex-update")
+    public CustomResponse<ResponsePlanRequirementMaterialDto> updatePlanRequirementMaterial(
+            @Valid @RequestBody EditPlanRequirementMaterialDto dto,
+            HttpServletRequest request, HttpServletResponse response) {
+
+        ResponsePlanRequirementMaterialDto planRequirementMaterial;
+        try {
+            planRequirementMaterial = planRequirementMaterialService.updatePlanRequirementMaterial(dto);
+        } catch (Exception e) {
+            response.setStatus(GlobalConstants.INTERNAL_ERROR);
+            return new CustomResponse<>(
+                    GlobalConstants.INTERNAL_ERROR,
+                    Util.getStatusCode(GlobalConstants.INTERNAL_ERROR),
+                    Util.getStatusCodeErrorDescription(GlobalConstants.INTERNAL_ERROR, e.getMessage()),
+                    request.getHeader(GlobalConstants.ID_TRANSACTION),
+                    Util.getDate());
+        }
+        return new CustomResponse<>(
+                GlobalConstants.OK,
+                Util.getStatusCode(GlobalConstants.OK),
+                "Plan Requerimiento Material actualizado",
+                request.getHeader(GlobalConstants.ID_TRANSACTION),
+                Util.getDate(),
+                planRequirementMaterial);
     }
 
 }

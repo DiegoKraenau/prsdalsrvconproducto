@@ -9,18 +9,17 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Data
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties
-public class RequestAuditDto {
-
-    @NotNull
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private Timestamp fecCreacion;
+public class EditAuditDto {
 
     @NotNull
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
@@ -28,15 +27,7 @@ public class RequestAuditDto {
 
     @NotNull
     @NotEmpty
-    private String usuCreacion;
-
-    @NotNull
-    @NotEmpty
     private String usuActualizacion;
-
-    @NotNull
-    @NotEmpty
-    private String equipoCreacion;
 
     @NotNull
     @NotEmpty

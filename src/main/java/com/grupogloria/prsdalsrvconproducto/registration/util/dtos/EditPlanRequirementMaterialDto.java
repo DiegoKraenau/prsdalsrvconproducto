@@ -2,38 +2,38 @@ package com.grupogloria.prsdalsrvconproducto.registration.util.dtos;
 
 import java.sql.Timestamp;
 
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.grupogloria.prsdalsrvconproducto.registration.domain.helpers.PlanRequirementMaterialId;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Data
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties
-public class ResponsePlanRequirementMaterialDto {
+public class EditPlanRequirementMaterialDto extends EditAuditDto {
 
-    private Long productoId;
+    @NotNull
+    private Long material;
 
-    private String nombreProducto;
-
-    private String familiaProducto;
-
-    private Integer cantidad;
-
+    @NotNull
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Timestamp fecha;
 
-    private String centroId;
+    @NotNull
+    private String centro;
 
-    private String nombreCentro;
-
+    @NotNull
     private String unidadMedida;
 
-    private Boolean flgAnulado;
+    private Integer cantidad;
 
+    private Boolean flgAnulado;
 }

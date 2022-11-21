@@ -24,6 +24,8 @@ import com.grupogloria.prsdalsrvconproducto.registration.repository.MaterialRepo
 import com.grupogloria.prsdalsrvconproducto.registration.repository.PlanRequirementMaterialRepository;
 import com.grupogloria.prsdalsrvconproducto.registration.repository.UnitMeasureRepository;
 import com.grupogloria.prsdalsrvconproducto.registration.service.PlanRequirementMaterialService;
+import com.grupogloria.prsdalsrvconproducto.registration.util.Util;
+import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.EditPlanRequirementMaterialDto;
 import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.RequestPlanRequirementMaterialDto;
 import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.ResponsePlanRequirementMaterialDto;
 
@@ -147,7 +149,8 @@ public class PlanRequirementMaterialServiceImpl implements PlanRequirementMateri
     }
 
     @Override
-    public List<ResponsePlanRequirementMaterialDto> getAllPlanRequirementMaterialsByFilters(String fechaInicio, String fechaFin)
+    public List<ResponsePlanRequirementMaterialDto> getAllPlanRequirementMaterialsByFilters(String fechaInicio,
+            String fechaFin)
             throws SqlException, Exception {
         try {
             List<PlanRequirementMaterialEntity> planRequirementMaterials = planRequirementMaterialRepository
@@ -170,6 +173,49 @@ public class PlanRequirementMaterialServiceImpl implements PlanRequirementMateri
                         return res;
                     })
                     .collect(Collectors.toList());
+
+        } catch (CannotCreateTransactionException | JDBCConnectionException ex) {
+            ElkLogger.log(Level.ERROR, ElkLogger.getStackTrace(ex), this.getClass().getName(), ex);
+            throw new SqlException("Conexion fallida. Por favor probar  mas tarde.");
+        } catch (Exception e) {
+            ElkLogger.log(Level.ERROR, ElkLogger.getStackTrace(e), this.getClass().getName(), e);
+            throw new SqlException("Error de data. Por favor probar mas tarde.");
+        }
+    }
+
+    @Override
+    public ResponsePlanRequirementMaterialDto updatePlanRequirementMaterial(
+            EditPlanRequirementMaterialDto updateDto)
+            throws SqlException, Exception {
+        try {
+            PlanRequirementMaterialEntity plantRequirementMaterial = planRequirementMaterialRepository
+                    .getOne(PlanRequirementMaterialId.builder()
+                            .centro(updateDto.getCentro())
+                            .fecha(updateDto.getFecha())
+                            .material(updateDto.getMaterial())
+                            .unidadMedida(updateDto.getUnidadMedida())
+                            .build());
+            Util.copyNonNullProperties(updateDto, plantRequirementMaterial);
+            // plantRequirementMaterial.setCantidad(updateDto.getCantidad());
+            // plantRequirementMaterial.setFlgAnulado(updateDto.getFlgAnulado());
+            // plantRequirementMaterial.setFecActualizacion(updateDto.getFecActualizacion());
+            // plantRequirementMaterial.setUsuActualizacion(updateDto.getUsuActualizacion());
+            // plantRequirementMaterial.setEquipoActualizacion(updateDto.getEquipoActualizacion());
+            plantRequirementMaterial = planRequirementMaterialRepository
+                    .save(plantRequirementMaterial);
+
+            ResponsePlanRequirementMaterialDto res = modelMapper.map(plantRequirementMaterial,
+                    ResponsePlanRequirementMaterialDto.class);
+
+            res.setFamiliaProducto(
+                    plantRequirementMaterial.getMaterial().getCategoriaMaterial().getCodCatMaterial());
+            res.setNombreProducto(plantRequirementMaterial.getMaterial().getNombreCorto());
+            res.setProductoId(plantRequirementMaterial.getMaterial().getId());
+            res.setCentroId(plantRequirementMaterial.getCentro().getIdCentro());
+            res.setNombreCentro(plantRequirementMaterial.getCentro().getCentro());
+            res.setUnidadMedida(plantRequirementMaterial.getUnidadMedida().getUnidadMedida());
+
+            return res;
 
         } catch (CannotCreateTransactionException | JDBCConnectionException ex) {
             ElkLogger.log(Level.ERROR, ElkLogger.getStackTrace(ex), this.getClass().getName(), ex);

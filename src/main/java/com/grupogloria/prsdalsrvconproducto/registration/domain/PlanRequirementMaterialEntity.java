@@ -64,4 +64,5 @@ public class PlanRequirementMaterialEntity extends AuditEntity {
 
     @Column(name = "flg_anulado", nullable = false)
     private Boolean flgAnulado;
+
 }
