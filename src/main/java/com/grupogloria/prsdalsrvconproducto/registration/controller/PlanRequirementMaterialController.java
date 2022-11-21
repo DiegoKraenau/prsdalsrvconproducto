@@ -98,12 +98,13 @@ public class PlanRequirementMaterialController {
     public CustomResponse<List<ResponsePlanRequirementMaterialDto>> getPlanRequirementMaterialsByFilters(
             @RequestParam(name = "fechaInicio") String startDate,
             @RequestParam(name = "fechaFin") String endDate,
+            @RequestParam(name = "centro") String centroId,
             HttpServletRequest request, HttpServletResponse response)
             throws SqlException, Exception {
         List<ResponsePlanRequirementMaterialDto> planRequirementMaterials;
         try {
             planRequirementMaterials = planRequirementMaterialService.getAllPlanRequirementMaterialsByFilters(startDate,
-                    endDate);
+                    endDate, centroId);
         } catch (Exception e) {
             response.setStatus(GlobalConstants.INTERNAL_ERROR);
             return new CustomResponse<>(

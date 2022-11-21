@@ -3,7 +3,6 @@ package com.grupogloria.prsdalsrvconproducto.registration.service;
 import java.util.List;
 
 import com.grupogloria.prsdalsrvconproducto.registration.domain.PlanRequirementMaterialEntity;
-import com.grupogloria.prsdalsrvconproducto.registration.domain.helpers.PlanRequirementMaterialId;
 import com.grupogloria.prsdalsrvconproducto.registration.exception.SqlException;
 import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.EditPlanRequirementMaterialDto;
 import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.RequestPlanRequirementMaterialDto;
@@ -17,7 +16,7 @@ public interface PlanRequirementMaterialService {
         List<ResponsePlanRequirementMaterialDto> getAllPlanRequirementMaterials() throws SqlException, Exception;
 
         List<ResponsePlanRequirementMaterialDto> getAllPlanRequirementMaterialsByFilters(String fechaInicio,
-                        String fechaFin)
+                        String fechaFin, String centroId)
                         throws SqlException, Exception;
 
         ResponsePlanRequirementMaterialDto updatePlanRequirementMaterial(

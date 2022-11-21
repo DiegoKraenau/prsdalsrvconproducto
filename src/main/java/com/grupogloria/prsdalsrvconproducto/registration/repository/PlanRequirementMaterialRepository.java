@@ -13,7 +13,7 @@ import com.grupogloria.prsdalsrvconproducto.registration.domain.helpers.PlanRequ
 public interface PlanRequirementMaterialRepository
                 extends BaseRepository<PlanRequirementMaterialEntity, PlanRequirementMaterialId> {
 
-        @Query("SELECT u FROM PlanRequirementMaterialEntity u WHERE u.fecha BETWEEN to_timestamp(:fechaInicio, 'yyyy-MM-DD') AND to_timestamp(:fechaFin, 'yyyy-MM-DD')")
+        @Query("SELECT u FROM PlanRequirementMaterialEntity u WHERE u.fecha BETWEEN to_timestamp(:fechaInicio, 'yyyy-MM-DD') AND to_timestamp(:fechaFin, 'yyyy-MM-DD') AND u.centro.idCentro = :centro")
         List<PlanRequirementMaterialEntity> findAllByFilters(@Param("fechaInicio") String fechaInicio,
-                        @Param("fechaFin") String fechaFin);
+                        @Param("fechaFin") String fechaFin, @Param("centro") String centroId);
 }

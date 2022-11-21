@@ -150,11 +150,11 @@ public class PlanRequirementMaterialServiceImpl implements PlanRequirementMateri
 
     @Override
     public List<ResponsePlanRequirementMaterialDto> getAllPlanRequirementMaterialsByFilters(String fechaInicio,
-            String fechaFin)
+            String fechaFin, String centroId)
             throws SqlException, Exception {
         try {
             List<PlanRequirementMaterialEntity> planRequirementMaterials = planRequirementMaterialRepository
-                    .findAllByFilters(fechaInicio, fechaFin);
+                    .findAllByFilters(fechaInicio, fechaFin, centroId);
 
             return planRequirementMaterials
                     .stream()
