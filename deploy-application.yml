@@ -1,0 +1,59 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: value_servicename
+  namespace: value_namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: value_servicename
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: value_servicename
+        tier: backend
+    spec:
+      containers:
+      - name: value_servicename
+        image: value_imageurl
+        imagePullPolicy: Always
+        env:
+          - name: MY_NODE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          - name: MY_POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: MY_POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+        volumeMounts:
+          - name: log-path
+            mountPath: value_logs_path
+        ports:
+        - containerPort: 8007
+      volumes:
+        - name: log-path
+          hostPath:
+            path: value_logs_path
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: value_servicename
+  namespace: value_namespace
+spec:
+  type: LoadBalancer
+  selector:
+    app: value_servicename
+    tier: backend 
+  ports:
+  - port: 33007
+    protocol: TCP
+    targetPort: value_port_ms
