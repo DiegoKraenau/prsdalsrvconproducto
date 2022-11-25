@@ -27,7 +27,7 @@ INSERT INTO public.centro(
 
 INSERT INTO public.centro_material(
 	id_centro, id_material, fec_creacion, equipo_creacion, equipo_actualizacion, fec_actualizacion, usu_creacion, usu_actualizacion)
-	VALUES ('001', 1, '2022-06-21T00:00:00', 'eq1', 'eq1', '2022-06-21T00:00:00', 'usu1', 'usu1');
+	VALUES ('001', 1, '2022-06-21T00:00:00', 'eq1', 'eq1', '2022-06-21T00:00:00', 'usu1', 'usu2');
 
 
 INSERT INTO public.centro_material(
