@@ -107,11 +107,11 @@
         </dependency>
 
         <!-- Logback encoder for Logstash -->
-        <dependency>
+       <!-- <dependency>
             <groupId>net.logstash.logback</groupId>
             <artifactId>logstash-logback-encoder</artifactId>
             <version>${logstash-logback-encoder.version}</version>
-        </dependency>
+        </dependency>-->
 
         <!-- Spring Cloud Sleuth -->
         <dependency>
