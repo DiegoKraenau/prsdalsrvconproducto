@@ -6,16 +6,15 @@ Configuration:
         value: value_logs_path
       - name: project.name
         value: value_project_name
-
   Appenders:
     RollingFile:
       - name: ROLLING_FILE
         ignoreExceptions: false
-        fileName: "${log.path}/qiusuo#${project.name}#${env:MY_NODE_NAME}#${env:MY_POD_NAMESPACE}#${env:MY_POD_NAME}.log"
-        filePattern: "${log.path}/qiusuo#${project.name}#${env:MY_NODE_NAME}#${env:MY_POD_NAMESPACE}#${env:MY_POD_NAME}#%d{yyyy-MM-dd}.log"
+        fileName: "${log.path}/logfile#${project.name}#${env:MY_NODE_NAME}#${env:MY_POD_NAMESPACE}#${env:MY_POD_NAME}.log"
+        filePattern: "${log.path}/logfile#${project.name}#${env:MY_NODE_NAME}#${env:MY_POD_NAMESPACE}#${env:MY_POD_NAME}#%d{yyyy-MM-dd}.log"
         append: true
         PatternLayout:
-          pattern: "%d{yyyy-MM-dd HH:mm:ss}:${project.name} %p %t [%F:%L] - %m%n"
+          pattern: "%d{yyyy-MM-dd HH:mm:ss,SSS} ${project.name} ${env:MY_POD_NAME} [%p] %t [%F:%L] %m%n"
         Policies:
           TimeBasedTriggeringPolicy:
             modulate: true

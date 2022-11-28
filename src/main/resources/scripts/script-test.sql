@@ -45,3 +45,5 @@ INSERT INTO public.unidad_medida(
 INSERT INTO public.unidad_alternativo(
 	id_material, id_unidad_medida, contador, denominador, flg_anulado)
 	VALUES (1, 'U1', 1, 1, false);
+
+	/*PRUEBA 28112022 HOY*/

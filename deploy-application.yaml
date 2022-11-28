@@ -37,7 +37,7 @@ spec:
           - name: log-path
             mountPath: value_logs_path
         ports:
-        - containerPort: 8007
+        - containerPort: value_port_ms
       volumes:
         - name: log-path
           hostPath:
@@ -54,6 +54,6 @@ spec:
     app: value_servicename
     tier: backend 
   ports:
-  - port: 33007
+  - port: value_port_k8s
     protocol: TCP
     targetPort: value_port_ms
