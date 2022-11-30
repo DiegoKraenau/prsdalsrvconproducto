@@ -5,6 +5,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +34,8 @@ public class MaterialController {
 
     @Autowired
     private MaterialService materialService;
+
+    private static final Logger logger = LogManager.getLogger(MaterialController.class);
 
     @LogMethodCall
     @GetMapping("/material/find-all")
@@ -83,6 +87,15 @@ public class MaterialController {
                 request.getHeader(GlobalConstants.ID_TRANSACTION),
                 Util.getDate(),
                 material);
+    }
+
+    @LogMethodCall
+    @GetMapping("/test")
+    public String Test() {
+        logger.trace("FALLANDO TRACE");
+        logger.warn("FALLANDO WARN");
+        logger.error("FALLANDO ERROR");
+        return "Hola";
     }
 
 }
