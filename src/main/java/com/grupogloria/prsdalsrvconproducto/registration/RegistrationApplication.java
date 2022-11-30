@@ -9,11 +9,9 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableDiscoveryClient
 @SpringBootApplication
 public class RegistrationApplication {
-	// private static final Logger logger =
-	// LogManager.getLogger(RegistrationApplication.class);
 
 	public static void main(String[] args) {
-		// logger.trace("Holaaaaaaaaaaaaa");
+
 		SpringApplication.run(RegistrationApplication.class, args);
 	}
 
