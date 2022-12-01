@@ -2,13 +2,14 @@ package com.grupogloria.prsdalsrvconproducto.registration.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.grupogloria.prsdalsrvconproducto.registration.aop.logging.LogMethodCall;
@@ -35,8 +36,8 @@ public class MaterialController {
 
     @LogMethodCall
     @GetMapping("/material/find-all")
-    public CustomResponse<List<ResponseMaterialDto>> getMaterials(HttpServletRequest request,
-            HttpServletResponse response)
+    public CustomResponse<List<ResponseMaterialDto>> getMaterials(HttpServletResponse response,
+            @RequestHeader(value = "idTransaccion") String idTransaccion)
             throws SqlException, Exception {
         List<ResponseMaterialDto> materials;
         try {
@@ -47,22 +48,23 @@ public class MaterialController {
                     GlobalConstants.INTERNAL_ERROR,
                     Util.getStatusCode(GlobalConstants.INTERNAL_ERROR),
                     Util.getStatusCodeErrorDescription(GlobalConstants.INTERNAL_ERROR, e.getMessage()),
-                    request.getHeader(GlobalConstants.ID_TRANSACTION),
+                    idTransaccion,
                     Util.getDate());
         }
         return new CustomResponse<>(
                 GlobalConstants.OK,
                 Util.getStatusCode(GlobalConstants.OK),
                 "Listado de Material",
-                request.getHeader(GlobalConstants.ID_TRANSACTION),
+                idTransaccion,
                 Util.getDate(),
                 materials);
     }
 
     @LogMethodCall
     @GetMapping("/material/{id}")
-    public CustomResponse<ResponseMaterialDto> getMaterialById(HttpServletRequest request, HttpServletResponse response,
-            @PathVariable("id") String id)
+    public CustomResponse<ResponseMaterialDto> getMaterialById(@PathVariable("id") String id,
+            HttpServletResponse response,
+            @RequestHeader(value = "idTransaccion") String idTransaccion)
             throws SqlException, Exception {
         ResponseMaterialDto material;
         try {
@@ -73,14 +75,14 @@ public class MaterialController {
                     GlobalConstants.INTERNAL_ERROR,
                     Util.getStatusCode(GlobalConstants.INTERNAL_ERROR),
                     Util.getStatusCodeErrorDescription(GlobalConstants.INTERNAL_ERROR, e.getMessage()),
-                    request.getHeader(GlobalConstants.ID_TRANSACTION),
+                    idTransaccion,
                     Util.getDate());
         }
         return new CustomResponse<>(
                 GlobalConstants.OK,
                 Util.getStatusCode(GlobalConstants.OK),
                 "Material identificado por Id",
-                request.getHeader(GlobalConstants.ID_TRANSACTION),
+                idTransaccion,
                 Util.getDate(),
                 material);
     }
