@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -45,7 +44,7 @@ public class PlanRequirementMaterialController {
     @PostMapping("/plan-requirement-material")
     public CustomResponse<PlanRequirementMaterialEntity> registerPlanRequirementMaterial(
             @Valid @RequestBody RequestPlanRequirementMaterialDto dto,
-            @RequestHeader(value = "idTransaccion") String idTransaccion, HttpServletResponse response)
+            HttpServletRequest request, HttpServletResponse response)
             throws SqlException, Exception {
         PlanRequirementMaterialEntity planRequirementMaterialRegistered;
         try {
@@ -56,14 +55,14 @@ public class PlanRequirementMaterialController {
                     GlobalConstants.INTERNAL_ERROR,
                     Util.getStatusCode(GlobalConstants.INTERNAL_ERROR),
                     Util.getStatusCodeErrorDescription(GlobalConstants.INTERNAL_ERROR, e.getMessage()),
-                    idTransaccion,
+                    Util.getAllHeaders(request),
                     Util.getDate());
         }
         return new CustomResponse<>(
                 GlobalConstants.OK,
                 Util.getStatusCode(GlobalConstants.OK),
                 "Registro de Plan Requerimiento Material",
-                idTransaccion,
+                Util.getAllHeaders(request),
                 Util.getDate(),
                 planRequirementMaterialRegistered);
     }
@@ -71,7 +70,7 @@ public class PlanRequirementMaterialController {
     @LogMethodCall
     @GetMapping("/plan-requirement-material/find-all")
     public CustomResponse<List<ResponsePlanRequirementMaterialDto>> getPlanRequirementMaterials(
-            @RequestHeader(value = "idTransaccion") String idTransaccion, HttpServletResponse response)
+            HttpServletRequest request, HttpServletResponse response)
             throws SqlException, Exception {
         List<ResponsePlanRequirementMaterialDto> planRequirementMaterials;
         try {
@@ -82,14 +81,14 @@ public class PlanRequirementMaterialController {
                     GlobalConstants.INTERNAL_ERROR,
                     Util.getStatusCode(GlobalConstants.INTERNAL_ERROR),
                     Util.getStatusCodeErrorDescription(GlobalConstants.INTERNAL_ERROR, e.getMessage()),
-                    idTransaccion,
+                    Util.getAllHeaders(request),
                     Util.getDate());
         }
         return new CustomResponse<>(
                 GlobalConstants.OK,
                 Util.getStatusCode(GlobalConstants.OK),
                 "Listado de Plan Requerimiento Material",
-                idTransaccion,
+                Util.getAllHeaders(request),
                 Util.getDate(),
                 planRequirementMaterials);
     }
@@ -100,7 +99,7 @@ public class PlanRequirementMaterialController {
             @RequestParam(name = "fechaInicio") String startDate,
             @RequestParam(name = "fechaFin") String endDate,
             @RequestParam(name = "centro") String centroId,
-            @RequestHeader(value = "idTransaccion") String idTransaccion, HttpServletResponse response)
+            HttpServletRequest request, HttpServletResponse response)
             throws SqlException, Exception {
         List<ResponsePlanRequirementMaterialDto> planRequirementMaterials;
         try {
@@ -112,14 +111,14 @@ public class PlanRequirementMaterialController {
                     GlobalConstants.INTERNAL_ERROR,
                     Util.getStatusCode(GlobalConstants.INTERNAL_ERROR),
                     Util.getStatusCodeErrorDescription(GlobalConstants.INTERNAL_ERROR, e.getMessage()),
-                    idTransaccion,
+                    Util.getAllHeaders(request),
                     Util.getDate());
         }
         return new CustomResponse<>(
                 GlobalConstants.OK,
                 Util.getStatusCode(GlobalConstants.OK),
                 "Listado de Plan Requerimiento Material con filtros",
-                idTransaccion,
+                Util.getAllHeaders(request),
                 Util.getDate(),
                 planRequirementMaterials);
     }
@@ -128,7 +127,7 @@ public class PlanRequirementMaterialController {
     @PutMapping("/plan-requirement-material/complex-update")
     public CustomResponse<ResponsePlanRequirementMaterialDto> updatePlanRequirementMaterial(
             @Valid @RequestBody EditPlanRequirementMaterialDto dto,
-            @RequestHeader(value = "idTransaccion") String idTransaccion, HttpServletResponse response) {
+            HttpServletRequest request, HttpServletResponse response) {
 
         ResponsePlanRequirementMaterialDto planRequirementMaterial;
         try {
@@ -139,14 +138,14 @@ public class PlanRequirementMaterialController {
                     GlobalConstants.INTERNAL_ERROR,
                     Util.getStatusCode(GlobalConstants.INTERNAL_ERROR),
                     Util.getStatusCodeErrorDescription(GlobalConstants.INTERNAL_ERROR, e.getMessage()),
-                    idTransaccion,
+                    Util.getAllHeaders(request),
                     Util.getDate());
         }
         return new CustomResponse<>(
                 GlobalConstants.OK,
                 Util.getStatusCode(GlobalConstants.OK),
                 "Plan Requerimiento Material actualizado",
-                idTransaccion,
+                Util.getAllHeaders(request),
                 Util.getDate(),
                 planRequirementMaterial);
     }

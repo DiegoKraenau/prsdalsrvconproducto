@@ -2,8 +2,13 @@ package com.grupogloria.prsdalsrvconproducto.registration.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
@@ -50,5 +55,20 @@ public class Util {
         }
         String[] result = new String[emptyNames.size()];
         return emptyNames.toArray(result);
+    }
+
+    public static Map<String, String> getAllHeaders(HttpServletRequest request) {
+        Enumeration<String> headerNames = request.getHeaderNames();
+        Map<String, String> mapper = new HashMap<>();
+        ;
+
+        if (headerNames != null) {
+            while (headerNames.hasMoreElements()) {
+                String name = headerNames.nextElement();
+                mapper.put(name, request.getHeader(name));
+            }
+        }
+
+        return mapper;
     }
 }
