@@ -12,6 +12,7 @@ public class GlobalConstants {
 	public static final int RESET_CONTENT = 205;
 	public static final int PARTIAL_CONTENT = 206;
 	public static final int INTERNAL_ERROR = 503;
+	public static final int FORBIDDEN_ERROR = 403;
 	public static final List<Integer> successfulRequests = new ArrayList<Integer>() {
 		{
 			add(GlobalConstants.OK);
@@ -19,6 +20,20 @@ public class GlobalConstants {
 			add(GlobalConstants.ACCEPTED);
 			add(GlobalConstants.RESET_CONTENT);
 			add(GlobalConstants.PARTIAL_CONTENT);
+		}
+	};
+
+	public static final List<String> mandatoryHeaders = new ArrayList<String>() {
+		{
+			add("pais");
+			add("empresa");
+			add("division");
+			add("area");
+			add("proyecto");
+			add("idTransaccion");
+			add("aplicacion");
+			add("usuarioAplicacion");
+			add("fechaEjecucion");
 		}
 	};
 }
