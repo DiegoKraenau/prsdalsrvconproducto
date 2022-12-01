@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.grupogloria.prsdalsrvconproducto.registration.aop.logging.LogMethodCall;
@@ -34,7 +35,8 @@ public class MaterialCategoryController {
 
     @LogMethodCall
     @GetMapping("/material-category/find-all")
-    public CustomResponse<List<ResponseMaterialCategoryDto>> getCategories(HttpServletRequest request,
+    public CustomResponse<List<ResponseMaterialCategoryDto>> getCategories(
+            @RequestHeader(value = "idTransaccion") String idTransaccion,
             HttpServletResponse response)
             throws SqlException, Exception {
         List<ResponseMaterialCategoryDto> categories;
@@ -46,14 +48,14 @@ public class MaterialCategoryController {
                     GlobalConstants.INTERNAL_ERROR,
                     Util.getStatusCode(GlobalConstants.INTERNAL_ERROR),
                     Util.getStatusCodeErrorDescription(GlobalConstants.INTERNAL_ERROR, e.getMessage()),
-                    request.getHeader(GlobalConstants.ID_TRANSACTION),
+                    idTransaccion,
                     Util.getDate());
         }
         return new CustomResponse<>(
                 GlobalConstants.OK,
                 Util.getStatusCode(GlobalConstants.OK),
                 "Listado de Categorias de Material",
-                request.getHeader(GlobalConstants.ID_TRANSACTION),
+                idTransaccion,
                 Util.getDate(),
                 categories);
     }

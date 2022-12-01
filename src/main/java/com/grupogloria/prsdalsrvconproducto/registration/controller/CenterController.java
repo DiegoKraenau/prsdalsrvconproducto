@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.grupogloria.prsdalsrvconproducto.registration.aop.logging.LogMethodCall;
@@ -34,7 +35,8 @@ public class CenterController {
 
     @LogMethodCall
     @GetMapping("/center/find-all")
-    public CustomResponse<List<ResponseCenterDto>> getCenters(HttpServletRequest request, HttpServletResponse response)
+    public CustomResponse<List<ResponseCenterDto>> getCenters(HttpServletResponse response,
+            @RequestHeader(value = "idTransaccion") String idTransaccion)
             throws SqlException, Exception {
         List<ResponseCenterDto> centers;
         try {
@@ -45,14 +47,14 @@ public class CenterController {
                     GlobalConstants.INTERNAL_ERROR,
                     Util.getStatusCode(GlobalConstants.INTERNAL_ERROR),
                     Util.getStatusCodeErrorDescription(GlobalConstants.INTERNAL_ERROR, e.getMessage()),
-                    request.getHeader(GlobalConstants.ID_TRANSACTION),
+                    idTransaccion,
                     Util.getDate());
         }
         return new CustomResponse<>(
                 GlobalConstants.OK,
                 Util.getStatusCode(GlobalConstants.OK),
                 "Listado de Centros",
-                request.getHeader(GlobalConstants.ID_TRANSACTION),
+                idTransaccion,
                 Util.getDate(),
                 centers);
     }
