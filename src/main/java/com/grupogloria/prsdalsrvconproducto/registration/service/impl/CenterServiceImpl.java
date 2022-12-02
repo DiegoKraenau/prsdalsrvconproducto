@@ -5,16 +5,19 @@ import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.Level;
 import org.hibernate.exception.JDBCConnectionException;
+import org.json.JSONObject;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.CannotCreateTransactionException;
 
-import com.grupogloria.prsdalsrvconproducto.registration.aop.logging.ElkLogger;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.grupogloria.prsdalsrvconproducto.registration.constants.GlobalConstants;
+import com.grupogloria.prsdalsrvconproducto.registration.controller.request.HeaderRequest;
 import com.grupogloria.prsdalsrvconproducto.registration.domain.CenterEntity;
-import com.grupogloria.prsdalsrvconproducto.registration.exception.SqlException;
 import com.grupogloria.prsdalsrvconproducto.registration.repository.CenterRepository;
 import com.grupogloria.prsdalsrvconproducto.registration.service.CenterService;
+import com.grupogloria.prsdalsrvconproducto.registration.util.ManageError;
 import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.ResponseCenterDto;
 import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.ResponseMaterialDto;
 import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.UnitMeasureDto;
@@ -31,12 +34,19 @@ public class CenterServiceImpl implements CenterService {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    ObjectMapper objMapper;
+
     @Override
-    public List<ResponseCenterDto> getAllCenters() throws SqlException, Exception {
+    public List<ResponseCenterDto> getAllCenters(HeaderRequest headers) throws Exception {
         try {
+            log.info(
+                    GlobalConstants.HEADER + " - " + Thread.currentThread().getStackTrace()[1].getMethodName() + " - "
+                            + headers.getIdTransaccion() + ": {}",
+                    objMapper.writeValueAsString(headers));
             List<CenterEntity> centers = centerRepository.findAll();
 
-            return centers
+            List<ResponseCenterDto> response = centers
                     .stream()
                     .map(center -> {
                         ResponseCenterDto res = modelMapper.map(center, ResponseCenterDto.class);
@@ -44,13 +54,24 @@ public class CenterServiceImpl implements CenterService {
                         return res;
                     })
                     .collect(Collectors.toList());
+            log.info(
+                    GlobalConstants.RESPONSE + " - " + Thread.currentThread().getStackTrace()[1].getMethodName() +
+                            " - " + headers.getIdTransaccion() + ": {}",
+                    objMapper.writeValueAsString(response));
 
-        } catch (CannotCreateTransactionException | JDBCConnectionException ex) {
-            ElkLogger.log(Level.ERROR, ElkLogger.getStackTrace(ex), this.getClass().getName(), ex);
-            throw new SqlException("Conexion fallida. Por favor probar mas tarde.");
+            return response;
+
         } catch (Exception e) {
-            ElkLogger.log(Level.ERROR, ElkLogger.getStackTrace(e), this.getClass().getName(), e);
-            throw new SqlException("Error de data. Por favor probar mas tarde.");
+            log.error(
+                    GlobalConstants.ERROR + " - " + Thread.currentThread().getStackTrace()[1].getMethodName() + " - "
+                            + headers.getIdTransaccion() + ": {}",
+                    objMapper.writeValueAsString(ManageError
+                            .builder()
+                            .idTransaccion(headers.getIdTransaccion())
+                            .message(e.getMessage())
+                            .build()));
+
+            throw new Exception("Error de data. Por favor probar mas tarde.");
         }
     }
 

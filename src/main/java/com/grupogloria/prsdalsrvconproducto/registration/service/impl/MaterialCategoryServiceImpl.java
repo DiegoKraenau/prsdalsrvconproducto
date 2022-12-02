@@ -3,18 +3,17 @@ package com.grupogloria.prsdalsrvconproducto.registration.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.apache.logging.log4j.Level;
 import org.hibernate.exception.JDBCConnectionException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.CannotCreateTransactionException;
 
-import com.grupogloria.prsdalsrvconproducto.registration.aop.logging.ElkLogger;
+import com.grupogloria.prsdalsrvconproducto.registration.constants.GlobalConstants;
 import com.grupogloria.prsdalsrvconproducto.registration.domain.MaterialCategoryEntity;
-import com.grupogloria.prsdalsrvconproducto.registration.exception.SqlException;
 import com.grupogloria.prsdalsrvconproducto.registration.repository.MaterialCategoryRepository;
 import com.grupogloria.prsdalsrvconproducto.registration.service.MaterialCategoryService;
+import com.grupogloria.prsdalsrvconproducto.registration.util.ManageError;
 import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.ResponseMaterialCategoryDto;
 
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +29,7 @@ public class MaterialCategoryServiceImpl implements MaterialCategoryService {
     private ModelMapper modelMapper;
 
     @Override
-    public List<ResponseMaterialCategoryDto> getAllCategories() throws SqlException, Exception {
+    public List<ResponseMaterialCategoryDto> getAllCategories() throws Exception {
         try {
             List<MaterialCategoryEntity> categories = materialCategoryRepository.findAll();
 
@@ -39,13 +38,12 @@ public class MaterialCategoryServiceImpl implements MaterialCategoryService {
                     .map(category -> modelMapper.map(category, ResponseMaterialCategoryDto.class))
                     .collect(Collectors.toList());
 
-        } catch (CannotCreateTransactionException | JDBCConnectionException ex) {
-            ElkLogger.log(Level.ERROR, ElkLogger.getStackTrace(ex), this.getClass().getName(), ex);
-            throw new SqlException("Conexion fallida. Por favor probar mas tarde.");
         } catch (Exception e) {
-            ElkLogger.log(Level.ERROR, ElkLogger.getStackTrace(e), this.getClass().getName(), e);
-            throw new SqlException("Error de data. Por favor probar mas tarde.");
+            // log.error(GlobalConstants.ERROR + " - " +
+            // Thread.currentThread().getStackTrace()[1].getMethodName(),
+            // ManageError.builder().idTransaccion(headers.getIdTransaccion()));
+            throw new Exception("Error de data. Por favor probar mas tarde.");
         }
-    }
 
+    }
 }

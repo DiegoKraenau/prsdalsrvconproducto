@@ -12,13 +12,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.CannotCreateTransactionException;
 
 import com.google.common.util.concurrent.ExecutionError;
-import com.grupogloria.prsdalsrvconproducto.registration.aop.logging.ElkLogger;
 import com.grupogloria.prsdalsrvconproducto.registration.domain.CenterEntity;
 import com.grupogloria.prsdalsrvconproducto.registration.domain.MaterialEntity;
 import com.grupogloria.prsdalsrvconproducto.registration.domain.PlanRequirementMaterialEntity;
 import com.grupogloria.prsdalsrvconproducto.registration.domain.UnitMeasureEntity;
 import com.grupogloria.prsdalsrvconproducto.registration.domain.helpers.PlanRequirementMaterialId;
-import com.grupogloria.prsdalsrvconproducto.registration.exception.SqlException;
 import com.grupogloria.prsdalsrvconproducto.registration.repository.CenterRepository;
 import com.grupogloria.prsdalsrvconproducto.registration.repository.MaterialRepository;
 import com.grupogloria.prsdalsrvconproducto.registration.repository.PlanRequirementMaterialRepository;
@@ -52,7 +50,7 @@ public class PlanRequirementMaterialServiceImpl implements PlanRequirementMateri
 
     @Override
     public PlanRequirementMaterialEntity registerPlanRequirementMaterial(RequestPlanRequirementMaterialDto registerDto)
-            throws SqlException, Exception {
+            throws Exception {
 
         MaterialEntity material = materialRepository
                 .findById(registerDto.getMaterialId())
@@ -105,18 +103,17 @@ public class PlanRequirementMaterialServiceImpl implements PlanRequirementMateri
 
             return planRequirementMaterialRegistered;
 
-        } catch (CannotCreateTransactionException | JDBCConnectionException ex) {
-            ElkLogger.log(Level.ERROR, ElkLogger.getStackTrace(ex), this.getClass().getName(), ex);
-            throw new SqlException("Conexion fallida. Por favor probar mas tarde.");
         } catch (Exception e) {
-            ElkLogger.log(Level.ERROR, ElkLogger.getStackTrace(e), this.getClass().getName(), e);
-            throw new Exception(e.getMessage());
+            // log.error(GlobalConstants.ERROR + " - " +
+            // Thread.currentThread().getStackTrace()[1].getMethodName(),
+            // ManageError.builder().idTransaccion(headers.getIdTransaccion()));
+            throw new Exception("Error de data. Por favor probar mas tarde.");
         }
     }
 
     @Override
     public List<ResponsePlanRequirementMaterialDto> getAllPlanRequirementMaterials()
-            throws SqlException, ExecutionError {
+            throws Exception {
 
         try {
             List<PlanRequirementMaterialEntity> planRequirementMaterials = planRequirementMaterialRepository.findAll();
@@ -139,19 +136,18 @@ public class PlanRequirementMaterialServiceImpl implements PlanRequirementMateri
                     })
                     .collect(Collectors.toList());
 
-        } catch (CannotCreateTransactionException | JDBCConnectionException ex) {
-            ElkLogger.log(Level.ERROR, ElkLogger.getStackTrace(ex), this.getClass().getName(), ex);
-            throw new SqlException("Conexion fallida. Por favor probar mas tarde.");
         } catch (Exception e) {
-            ElkLogger.log(Level.ERROR, ElkLogger.getStackTrace(e), this.getClass().getName(), e);
-            throw new SqlException("Error de data. Por favor probar mas tarde.");
+            // log.error(GlobalConstants.ERROR + " - " +
+            // Thread.currentThread().getStackTrace()[1].getMethodName(),
+            // ManageError.builder().idTransaccion(headers.getIdTransaccion()));
+            throw new Exception("Error de data. Por favor probar mas tarde.");
         }
     }
 
     @Override
     public List<ResponsePlanRequirementMaterialDto> getAllPlanRequirementMaterialsByFilters(String fechaInicio,
             String fechaFin, String centroId)
-            throws SqlException, Exception {
+            throws Exception {
         try {
             List<PlanRequirementMaterialEntity> planRequirementMaterials = planRequirementMaterialRepository
                     .findAllByFilters(fechaInicio, fechaFin, centroId);
@@ -174,19 +170,18 @@ public class PlanRequirementMaterialServiceImpl implements PlanRequirementMateri
                     })
                     .collect(Collectors.toList());
 
-        } catch (CannotCreateTransactionException | JDBCConnectionException ex) {
-            ElkLogger.log(Level.ERROR, ElkLogger.getStackTrace(ex), this.getClass().getName(), ex);
-            throw new SqlException("Conexion fallida. Por favor probar  mas tarde.");
         } catch (Exception e) {
-            ElkLogger.log(Level.ERROR, ElkLogger.getStackTrace(e), this.getClass().getName(), e);
-            throw new SqlException("Error de data. Por favor probar mas tarde.");
+            // log.error(GlobalConstants.ERROR + " - " +
+            // Thread.currentThread().getStackTrace()[1].getMethodName(),
+            // ManageError.builder().idTransaccion(headers.getIdTransaccion()));
+            throw new Exception("Error de data. Por favor probar mas tarde.");
         }
     }
 
     @Override
     public ResponsePlanRequirementMaterialDto updatePlanRequirementMaterial(
             EditPlanRequirementMaterialDto updateDto)
-            throws SqlException, Exception {
+            throws Exception {
         try {
             PlanRequirementMaterialEntity plantRequirementMaterial = planRequirementMaterialRepository
                     .getOne(PlanRequirementMaterialId.builder()
@@ -217,12 +212,11 @@ public class PlanRequirementMaterialServiceImpl implements PlanRequirementMateri
 
             return res;
 
-        } catch (CannotCreateTransactionException | JDBCConnectionException ex) {
-            ElkLogger.log(Level.ERROR, ElkLogger.getStackTrace(ex), this.getClass().getName(), ex);
-            throw new SqlException("Conexion fallida. Por favor probar mas tarde.");
         } catch (Exception e) {
-            ElkLogger.log(Level.ERROR, ElkLogger.getStackTrace(e), this.getClass().getName(), e);
-            throw new SqlException("Error de data. Por favor probar mas tarde.");
+            // log.error(GlobalConstants.ERROR + " - " +
+            // Thread.currentThread().getStackTrace()[1].getMethodName(),
+            // ManageError.builder().idTransaccion(headers.getIdTransaccion()));
+            throw new Exception("Error de data. Por favor probar mas tarde.");
         }
     }
 

@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.CannotCreateTransactionException;
 
-import com.grupogloria.prsdalsrvconproducto.registration.aop.logging.ElkLogger;
 import com.grupogloria.prsdalsrvconproducto.registration.domain.MaterialEntity;
-import com.grupogloria.prsdalsrvconproducto.registration.exception.SqlException;
 import com.grupogloria.prsdalsrvconproducto.registration.repository.MaterialRepository;
 import com.grupogloria.prsdalsrvconproducto.registration.service.MaterialService;
 import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.ResponseMaterialDto;
@@ -30,7 +28,7 @@ public class MaterialServiceImpl implements MaterialService {
     ModelMapper modelMapper;
 
     @Override
-    public List<ResponseMaterialDto> getAllMaterials() throws SqlException, Exception {
+    public List<ResponseMaterialDto> getAllMaterials() throws Exception {
         try {
             List<MaterialEntity> materials = materialRepository.findAll();
 
@@ -39,17 +37,16 @@ public class MaterialServiceImpl implements MaterialService {
                     .map(material -> modelMapper.map(material, ResponseMaterialDto.class))
                     .collect(Collectors.toList());
 
-        } catch (CannotCreateTransactionException | JDBCConnectionException ex) {
-            ElkLogger.log(Level.ERROR, ElkLogger.getStackTrace(ex), this.getClass().getName(), ex);
-            throw new SqlException("Conexion fallida. Por favor probar mas tarde.");
         } catch (Exception e) {
-            ElkLogger.log(Level.ERROR, ElkLogger.getStackTrace(e), this.getClass().getName(), e);
-            throw new SqlException("Error de data. Por favor probar mas tarde.");
+            // log.error(GlobalConstants.ERROR + " - " +
+            // Thread.currentThread().getStackTrace()[1].getMethodName(),
+            // ManageError.builder().idTransaccion(headers.getIdTransaccion()));
+            throw new Exception("Error de data. Por favor probar mas tarde.");
         }
     }
 
     @Override
-    public ResponseMaterialDto getMaterialById(Long id) throws SqlException, Exception {
+    public ResponseMaterialDto getMaterialById(Long id) throws Exception {
         MaterialEntity material = materialRepository
                 .findById(id)
                 .orElseThrow(() -> new Exception("Material no encontrado con el id : " +
@@ -57,12 +54,11 @@ public class MaterialServiceImpl implements MaterialService {
         try {
             return modelMapper.map(material, ResponseMaterialDto.class);
 
-        } catch (CannotCreateTransactionException | JDBCConnectionException ex) {
-            ElkLogger.log(Level.ERROR, ElkLogger.getStackTrace(ex), this.getClass().getName(), ex);
-            throw new SqlException("Conexion fallida. Por favor probar mas tarde.");
         } catch (Exception e) {
-            ElkLogger.log(Level.ERROR, ElkLogger.getStackTrace(e), this.getClass().getName(), e);
-            throw new SqlException("Error de data. Por favor probar mas tarde.");
+            // log.error(GlobalConstants.ERROR + " - " +
+            // Thread.currentThread().getStackTrace()[1].getMethodName(),
+            // ManageError.builder().idTransaccion(headers.getIdTransaccion()));
+            throw new Exception("Error de data. Por favor probar mas tarde.");
         }
     }
 
