@@ -1,5 +1,6 @@
 package com.grupogloria.prsdalsrvconproducto.registration.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,12 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.grupogloria.prsdalsrvconproducto.registration.aop.custom.ValidateHeaders;
-import com.grupogloria.prsdalsrvconproducto.registration.aop.logging.LogMethodCall;
 import com.grupogloria.prsdalsrvconproducto.registration.constants.GlobalConstants;
-import com.grupogloria.prsdalsrvconproducto.registration.exception.SqlException;
+import com.grupogloria.prsdalsrvconproducto.registration.controller.request.HeaderRequest;
 import com.grupogloria.prsdalsrvconproducto.registration.service.MaterialService;
 import com.grupogloria.prsdalsrvconproducto.registration.util.CustomResponse;
 import com.grupogloria.prsdalsrvconproducto.registration.util.Util;
@@ -22,9 +22,7 @@ import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.ResponseMater
 
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin
@@ -34,12 +32,18 @@ public class MaterialController {
     @Autowired
     private MaterialService materialService;
 
-    @ValidateHeaders
-    @LogMethodCall
     @GetMapping("/material/find-all")
     public CustomResponse<List<ResponseMaterialDto>> getMaterials(HttpServletRequest request,
-            HttpServletResponse response)
-            throws SqlException, Exception {
+            HttpServletResponse response, @RequestHeader(required = false, defaultValue = "PE") String pais,
+            @RequestHeader(required = false, defaultValue = "Gloria") String empresa,
+            @RequestHeader(required = false, defaultValue = "Linea") String division,
+            @RequestHeader(required = false, defaultValue = "01") String idTransaccion,
+            @RequestHeader(required = false, defaultValue = "prueba") String aplicacion,
+            @RequestHeader(required = false, defaultValue = "pruebaUser") String usuarioAplicacion,
+            @RequestHeader(required = false) Date fechaEjecucion)
+            throws Exception {
+        HeaderRequest header = new HeaderRequest(pais, empresa, division, idTransaccion, aplicacion, usuarioAplicacion,
+                fechaEjecucion);
         List<ResponseMaterialDto> materials;
         try {
             materials = materialService.getAllMaterials();
@@ -61,11 +65,18 @@ public class MaterialController {
                 materials);
     }
 
-    @LogMethodCall
     @GetMapping("/material/{id}")
     public CustomResponse<ResponseMaterialDto> getMaterialById(HttpServletRequest request, HttpServletResponse response,
-            @PathVariable("id") String id)
-            throws SqlException, Exception {
+            @PathVariable("id") String id, @RequestHeader(required = false, defaultValue = "PE") String pais,
+            @RequestHeader(required = false, defaultValue = "Gloria") String empresa,
+            @RequestHeader(required = false, defaultValue = "Linea") String division,
+            @RequestHeader(required = false, defaultValue = "01") String idTransaccion,
+            @RequestHeader(required = false, defaultValue = "prueba") String aplicacion,
+            @RequestHeader(required = false, defaultValue = "pruebaUser") String usuarioAplicacion,
+            @RequestHeader(required = false) Date fechaEjecucion)
+            throws Exception {
+        HeaderRequest header = new HeaderRequest(pais, empresa, division, idTransaccion, aplicacion, usuarioAplicacion,
+                fechaEjecucion);
         ResponseMaterialDto material;
         try {
             material = materialService.getMaterialById(Long.parseLong(id));

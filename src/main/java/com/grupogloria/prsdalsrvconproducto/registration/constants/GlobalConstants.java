@@ -13,6 +13,10 @@ public class GlobalConstants {
 	public static final int PARTIAL_CONTENT = 206;
 	public static final int INTERNAL_ERROR = 503;
 	public static final int FORBIDDEN_ERROR = 403;
+	public static final String HEADER = "Headers";
+	public static final String ERROR = "Error";
+	public static final String RESPONSE = "Response";
+
 	public static final List<Integer> successfulRequests = new ArrayList<Integer>() {
 		{
 			add(GlobalConstants.OK);
