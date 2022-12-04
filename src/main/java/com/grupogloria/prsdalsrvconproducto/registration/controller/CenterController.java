@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -39,7 +40,7 @@ public class CenterController {
             @RequestHeader(required = false, defaultValue = "01") String idTransaccion,
             @RequestHeader(required = false, defaultValue = "prueba") String aplicacion,
             @RequestHeader(required = false, defaultValue = "pruebaUser") String usuarioAplicacion,
-            @RequestHeader(required = false) Date fechaEjecucion)
+            @RequestHeader(required = false) @DateTimeFormat(pattern = GlobalConstants.SIMPLE_DATE_FORMAT) Date fechaEjecucion)
             throws Exception {
         HeaderRequest header = new HeaderRequest(pais, empresa, division, idTransaccion, aplicacion, usuarioAplicacion,
                 fechaEjecucion);

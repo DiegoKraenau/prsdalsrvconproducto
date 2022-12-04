@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,7 +50,7 @@ public class PlanRequirementMaterialController {
                         @RequestHeader(required = false, defaultValue = "01") String idTransaccion,
                         @RequestHeader(required = false, defaultValue = "prueba") String aplicacion,
                         @RequestHeader(required = false, defaultValue = "pruebaUser") String usuarioAplicacion,
-                        @RequestHeader(required = false) Date fechaEjecucion)
+                        @RequestHeader(required = false) @DateTimeFormat(pattern = GlobalConstants.SIMPLE_DATE_FORMAT) Date fechaEjecucion)
                         throws Exception {
                 HeaderRequest header = new HeaderRequest(pais, empresa, division, idTransaccion, aplicacion,
                                 usuarioAplicacion,
@@ -86,7 +87,7 @@ public class PlanRequirementMaterialController {
                         @RequestHeader(required = false, defaultValue = "01") String idTransaccion,
                         @RequestHeader(required = false, defaultValue = "prueba") String aplicacion,
                         @RequestHeader(required = false, defaultValue = "pruebaUser") String usuarioAplicacion,
-                        @RequestHeader(required = false) Date fechaEjecucion)
+                        @RequestHeader(required = false) @DateTimeFormat(pattern = GlobalConstants.SIMPLE_DATE_FORMAT) Date fechaEjecucion)
                         throws Exception {
                 HeaderRequest header = new HeaderRequest(pais, empresa, division, idTransaccion, aplicacion,
                                 usuarioAplicacion,
@@ -126,7 +127,7 @@ public class PlanRequirementMaterialController {
                         @RequestHeader(required = false, defaultValue = "01") String idTransaccion,
                         @RequestHeader(required = false, defaultValue = "prueba") String aplicacion,
                         @RequestHeader(required = false, defaultValue = "pruebaUser") String usuarioAplicacion,
-                        @RequestHeader(required = false) Date fechaEjecucion)
+                        @RequestHeader(required = false) @DateTimeFormat(pattern = GlobalConstants.SIMPLE_DATE_FORMAT) Date fechaEjecucion)
                         throws Exception {
                 HeaderRequest header = new HeaderRequest(pais, empresa, division, idTransaccion, aplicacion,
                                 usuarioAplicacion,
@@ -165,7 +166,7 @@ public class PlanRequirementMaterialController {
                         @RequestHeader(required = false, defaultValue = "01") String idTransaccion,
                         @RequestHeader(required = false, defaultValue = "prueba") String aplicacion,
                         @RequestHeader(required = false, defaultValue = "pruebaUser") String usuarioAplicacion,
-                        @RequestHeader(required = false) Date fechaEjecucion) {
+                        @RequestHeader(required = false) @DateTimeFormat(pattern = GlobalConstants.SIMPLE_DATE_FORMAT) Date fechaEjecucion) {
                 HeaderRequest header = new HeaderRequest(pais, empresa, division, idTransaccion, aplicacion,
                                 usuarioAplicacion,
                                 fechaEjecucion);

@@ -17,6 +17,7 @@ public class GlobalConstants {
 	public static final String ERROR = "Error";
 	public static final String RESPONSE = "Response";
 	public static final String PARAMS = "Parametros";
+	public static final String SIMPLE_DATE_FORMAT = "yyyy-MM-dd";
 
 	public static final List<Integer> successfulRequests = new ArrayList<Integer>() {
 		{
