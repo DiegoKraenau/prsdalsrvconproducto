@@ -29,7 +29,6 @@ import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.ResponsePlanR
 
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequiredArgsConstructor
@@ -58,7 +57,7 @@ public class PlanRequirementMaterialController {
                 PlanRequirementMaterialEntity planRequirementMaterialRegistered;
                 try {
                         planRequirementMaterialRegistered = planRequirementMaterialService
-                                        .registerPlanRequirementMaterial(dto);
+                                        .registerPlanRequirementMaterial(dto, header);
                 } catch (Exception e) {
                         response.setStatus(GlobalConstants.INTERNAL_ERROR);
                         return new CustomResponse<>(
@@ -94,7 +93,8 @@ public class PlanRequirementMaterialController {
                                 fechaEjecucion);
                 List<ResponsePlanRequirementMaterialDto> planRequirementMaterials;
                 try {
-                        planRequirementMaterials = planRequirementMaterialService.getAllPlanRequirementMaterials();
+                        planRequirementMaterials = planRequirementMaterialService
+                                        .getAllPlanRequirementMaterials(header);
                 } catch (Exception e) {
                         response.setStatus(GlobalConstants.INTERNAL_ERROR);
                         return new CustomResponse<>(
@@ -135,7 +135,7 @@ public class PlanRequirementMaterialController {
                 try {
                         planRequirementMaterials = planRequirementMaterialService
                                         .getAllPlanRequirementMaterialsByFilters(startDate,
-                                                        endDate, centroId);
+                                                        endDate, centroId, header);
                 } catch (Exception e) {
                         response.setStatus(GlobalConstants.INTERNAL_ERROR);
                         return new CustomResponse<>(
@@ -171,7 +171,8 @@ public class PlanRequirementMaterialController {
                                 fechaEjecucion);
                 ResponsePlanRequirementMaterialDto planRequirementMaterial;
                 try {
-                        planRequirementMaterial = planRequirementMaterialService.updatePlanRequirementMaterial(dto);
+                        planRequirementMaterial = planRequirementMaterialService.updatePlanRequirementMaterial(dto,
+                                        header);
                 } catch (Exception e) {
                         response.setStatus(GlobalConstants.INTERNAL_ERROR);
                         return new CustomResponse<>(

@@ -45,7 +45,7 @@ public class MaterialCategoryController {
                 fechaEjecucion);
         List<ResponseMaterialCategoryDto> categories;
         try {
-            categories = materialCategoryService.getAllCategories();
+            categories = materialCategoryService.getAllCategories(header);
         } catch (Exception e) {
             response.setStatus(GlobalConstants.INTERNAL_ERROR);
             return new CustomResponse<>(
