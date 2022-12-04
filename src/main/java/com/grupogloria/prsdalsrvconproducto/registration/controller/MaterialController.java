@@ -46,7 +46,7 @@ public class MaterialController {
                 fechaEjecucion);
         List<ResponseMaterialDto> materials;
         try {
-            materials = materialService.getAllMaterials();
+            materials = materialService.getAllMaterials(header);
         } catch (Exception e) {
             response.setStatus(GlobalConstants.INTERNAL_ERROR);
             return new CustomResponse<>(
@@ -79,7 +79,7 @@ public class MaterialController {
                 fechaEjecucion);
         ResponseMaterialDto material;
         try {
-            material = materialService.getMaterialById(Long.parseLong(id));
+            material = materialService.getMaterialById(Long.parseLong(id), header);
         } catch (Exception e) {
             response.setStatus(503);
             return new CustomResponse<>(

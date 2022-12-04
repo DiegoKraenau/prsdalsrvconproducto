@@ -3,13 +3,9 @@ package com.grupogloria.prsdalsrvconproducto.registration.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.apache.logging.log4j.Level;
-import org.hibernate.exception.JDBCConnectionException;
-import org.json.JSONObject;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.CannotCreateTransactionException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.grupogloria.prsdalsrvconproducto.registration.constants.GlobalConstants;
@@ -28,70 +24,79 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class CenterServiceImpl implements CenterService {
 
-    @Autowired
-    CenterRepository centerRepository;
+        @Autowired
+        CenterRepository centerRepository;
 
-    @Autowired
-    private ModelMapper modelMapper;
+        @Autowired
+        private ModelMapper modelMapper;
 
-    @Autowired
-    ObjectMapper objMapper;
+        @Autowired
+        ObjectMapper objMapper;
 
-    @Override
-    public List<ResponseCenterDto> getAllCenters(HeaderRequest headers) throws Exception {
-        try {
-            log.info(
-                    GlobalConstants.HEADER + " - " + Thread.currentThread().getStackTrace()[1].getMethodName() + " - "
-                            + headers.getIdTransaccion() + ": {}",
-                    objMapper.writeValueAsString(headers));
-            List<CenterEntity> centers = centerRepository.findAll();
+        @Override
+        public List<ResponseCenterDto> getAllCenters(HeaderRequest headers) throws Exception {
+                try {
+                        log.info(
+                                        GlobalConstants.HEADER + " - "
+                                                        + Thread.currentThread().getStackTrace()[1].getMethodName()
+                                                        + " - "
+                                                        + headers.getIdTransaccion() + ": {}",
+                                        objMapper.writeValueAsString(headers));
+                        List<CenterEntity> centers = centerRepository.findAll();
 
-            List<ResponseCenterDto> response = centers
-                    .stream()
-                    .map(center -> {
-                        ResponseCenterDto res = modelMapper.map(center, ResponseCenterDto.class);
-                        res.setMateriales(getMaterials(center));
-                        return res;
-                    })
-                    .collect(Collectors.toList());
-            log.info(
-                    GlobalConstants.RESPONSE + " - " + Thread.currentThread().getStackTrace()[1].getMethodName() +
-                            " - " + headers.getIdTransaccion() + ": {}",
-                    objMapper.writeValueAsString(response));
+                        List<ResponseCenterDto> response = centers
+                                        .stream()
+                                        .map(center -> {
+                                                ResponseCenterDto res = modelMapper.map(center,
+                                                                ResponseCenterDto.class);
+                                                res.setMateriales(getMaterials(center));
+                                                return res;
+                                        })
+                                        .collect(Collectors.toList());
+                        log.info(
+                                        GlobalConstants.RESPONSE + " - "
+                                                        + Thread.currentThread().getStackTrace()[1].getMethodName() +
+                                                        " - " + headers.getIdTransaccion() + ": {}",
+                                        objMapper.writeValueAsString(response));
 
-            return response;
+                        return response;
 
-        } catch (Exception e) {
-            log.error(
-                    GlobalConstants.ERROR + " - " + Thread.currentThread().getStackTrace()[1].getMethodName() + " - "
-                            + headers.getIdTransaccion() + ": {}",
-                    objMapper.writeValueAsString(ManageError
-                            .builder()
-                            .idTransaccion(headers.getIdTransaccion())
-                            .message(e.getMessage())
-                            .build()));
+                } catch (Exception e) {
+                        log.error(
+                                        GlobalConstants.ERROR + " - "
+                                                        + Thread.currentThread().getStackTrace()[1].getMethodName()
+                                                        + " - "
+                                                        + headers.getIdTransaccion() + ": {}",
+                                        objMapper.writeValueAsString(ManageError
+                                                        .builder()
+                                                        .idTransaccion(headers.getIdTransaccion())
+                                                        .message(e.getMessage())
+                                                        .build()));
 
-            throw new Exception("Error de data. Por favor probar mas tarde.");
+                        throw new Exception("Error de data. Por favor probar mas tarde.");
+                }
         }
-    }
 
-    private List<ResponseMaterialDto> getMaterials(CenterEntity center) {
+        private List<ResponseMaterialDto> getMaterials(CenterEntity center) {
 
-        return center.getCentroMateriales()
-                .stream()
-                .map(centerMaterial -> {
-                    ResponseMaterialDto res = modelMapper.map(centerMaterial.getMaterial(), ResponseMaterialDto.class);
+                return center.getCentroMateriales()
+                                .stream()
+                                .map(centerMaterial -> {
+                                        ResponseMaterialDto res = modelMapper.map(centerMaterial.getMaterial(),
+                                                        ResponseMaterialDto.class);
 
-                    List<UnitMeasureDto> unitsMeasure = centerMaterial.getMaterial().getUnidadMedidas()
-                            .stream()
-                            .map(unitMeasure -> modelMapper.map(unitMeasure, UnitMeasureDto.class))
-                            .collect(Collectors.toList());
+                                        List<UnitMeasureDto> unitsMeasure = centerMaterial.getMaterial()
+                                                        .getUnidadMedidas()
+                                                        .stream()
+                                                        .map(unitMeasure -> modelMapper.map(unitMeasure,
+                                                                        UnitMeasureDto.class))
+                                                        .collect(Collectors.toList());
 
-                    res.setUnidadMedidas(unitsMeasure);
-                    return res;
-                })
-                .collect(Collectors.toList());
+                                        res.setUnidadMedidas(unitsMeasure);
+                                        return res;
+                                })
+                                .collect(Collectors.toList());
 
-    }
+        }
 
 }

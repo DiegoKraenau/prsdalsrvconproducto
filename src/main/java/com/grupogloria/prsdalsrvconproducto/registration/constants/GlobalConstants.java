@@ -16,6 +16,7 @@ public class GlobalConstants {
 	public static final String HEADER = "Headers";
 	public static final String ERROR = "Error";
 	public static final String RESPONSE = "Response";
+	public static final String PARAMS = "Parametros";
 
 	public static final List<Integer> successfulRequests = new ArrayList<Integer>() {
 		{
