@@ -1,5 +1,8 @@
 package com.grupogloria.prsdalsrvconproducto.registration.util;
 
+import java.lang.reflect.Field;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Enumeration;
@@ -13,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
+import org.springframework.http.HttpHeaders;
 
 import com.grupogloria.prsdalsrvconproducto.registration.constants.GlobalConstants;
 
@@ -70,6 +74,43 @@ public class Util {
         }
 
         return mapper;
+    }
+
+    public static String transformDate(String date) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        SimpleDateFormat output = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date d = sdf.parse(date);
+        String formattedTime = output.format(d);
+
+        return formattedTime;
+    }
+
+    public static HttpHeaders transformEntityToHeader(
+            HttpHeaders headers, Object entity) {
+        Field[] fields = entity.getClass().getDeclaredFields();
+        for (Field field : fields) {
+            field.setAccessible(true);
+            try {
+                if (field.getType().equals(Date.class)) {
+
+                    DateFormat df = new SimpleDateFormat(GlobalConstants.SIMPLE_DATE_FORMAT);
+
+                    String date = df.format(field.get(entity));
+
+                    headers.set(field.getName(), date);
+                } else {
+
+                    headers.set(field.getName(), (String) field.get(entity));
+
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                headers = null;
+            }
+        }
+
+        return headers;
     }
 
 }
