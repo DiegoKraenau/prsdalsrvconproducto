@@ -16,7 +16,7 @@ import lombok.experimental.SuperBuilder;
 @JsonIgnoreProperties
 public class ResponseMaterialDto {
 
-    private Long id;
+    private String id;
 
     private String nombreLargo;
 
