@@ -8,5 +8,5 @@ import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.ResponseMater
 public interface MaterialService {
     List<ResponseMaterialDto> getAllMaterials(HeaderRequest headers) throws Exception;
 
-    ResponseMaterialDto getMaterialById(Long id, HeaderRequest headers) throws Exception;
+    ResponseMaterialDto getMaterialById(String id, HeaderRequest headers) throws Exception;
 }

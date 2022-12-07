@@ -33,9 +33,8 @@ import lombok.experimental.SuperBuilder;
 public class MaterialEntity extends AuditEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_material")
-    private Long id;
+    private String id;
 
     @Column(name = "nombre_largo", nullable = false)
     private String nombreLargo;

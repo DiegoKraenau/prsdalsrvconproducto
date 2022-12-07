@@ -80,7 +80,7 @@ public class MaterialController {
                 fechaEjecucion);
         ResponseMaterialDto material;
         try {
-            material = materialService.getMaterialById(Long.parseLong(id), header);
+            material = materialService.getMaterialById(id, header);
         } catch (Exception e) {
             response.setStatus(503);
             return new CustomResponse<>(

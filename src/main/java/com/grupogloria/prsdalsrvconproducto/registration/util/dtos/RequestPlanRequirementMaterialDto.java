@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 public class RequestPlanRequirementMaterialDto extends RequestAuditDto {
 
     @NotNull
-    private Long materialId;
+    private String materialId;
 
     @NotNull
     private Integer cantidad;
