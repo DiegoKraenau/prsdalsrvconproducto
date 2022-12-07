@@ -45,9 +45,6 @@ public class MaterialEntity extends AuditEntity {
     @Column(name = "presentacion", nullable = false)
     private String presentacion;
 
-    @Column(name = "flg_anulado", nullable = false)
-    private Boolean flgAnulado;
-
     @Column(name = "dias_vencimiento", nullable = false)
     private Integer diasVencimiento;
 
