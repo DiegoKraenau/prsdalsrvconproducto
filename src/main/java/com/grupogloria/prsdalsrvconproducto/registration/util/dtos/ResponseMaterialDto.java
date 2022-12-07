@@ -28,6 +28,8 @@ public class ResponseMaterialDto {
 
     private String tipoVencimiento;
 
+    private Boolean flgAnulado;
+
     private ResponseMaterialCategoryDto categoriaMaterial;
 
     private List<UnitMeasureDto> unidadMedidas;

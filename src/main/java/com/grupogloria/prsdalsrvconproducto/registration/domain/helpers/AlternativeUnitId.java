@@ -15,5 +15,5 @@ public class AlternativeUnitId implements Serializable {
 
     private String unidadMedida;
 
-    private Long material;
+    private String material;
 }
