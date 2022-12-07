@@ -24,8 +24,6 @@ public class ResponseMaterialDto {
 
     private String presentacion;
 
-    private Boolean flgAnulado;
-
     private Integer diasVencimiento;
 
     private String tipoVencimiento;
