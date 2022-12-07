@@ -33,7 +33,7 @@ import lombok.experimental.SuperBuilder;
 public class MaterialEntity extends AuditEntity {
 
     @Id
-    @Column(name = "id_material")
+    @Column(name = "id_material", nullable = false)
     private String id;
 
     @Column(name = "nombre_largo", nullable = false)
@@ -50,6 +50,9 @@ public class MaterialEntity extends AuditEntity {
 
     @Column(name = "tipo_vencimiento", nullable = false)
     private String tipoVencimiento;
+
+    @Column(name = "flg_anulado", nullable = false)
+    private Boolean flgAnulado;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cod_catmaterial")

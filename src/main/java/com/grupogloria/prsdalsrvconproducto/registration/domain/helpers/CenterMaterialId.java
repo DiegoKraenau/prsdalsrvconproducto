@@ -15,5 +15,5 @@ public class CenterMaterialId implements Serializable {
 
     private String centro;
 
-    private Long material;
+    private String material;
 }

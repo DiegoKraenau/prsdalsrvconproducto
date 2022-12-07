@@ -9,12 +9,12 @@ INSERT INTO public.categoria_material(
 
 INSERT INTO public.material(
 	id_material, fec_creacion, nombre_largo, presentacion, nombre_corto, fec_actualizacion, flg_anulado, dias_vencimiento, tipo_vencimiento, cod_catmaterial, usu_creacion, usu_actualizacion, equipo_creacion, equipo_actualizacion)
-	VALUES (1,'2022-06-21T00:00:00', 'LECHE TARRO', 'LEC TAR', 'LT', '2022-06-21T00:00:00', false, 4, 'TV1', '001', 'usu1', 'usu1', 'eq1', 'eq2');
+	VALUES ('M1','2022-06-21T00:00:00', 'LECHE TARRO', 'LEC TAR', 'LT', '2022-06-21T00:00:00', false, 4, 'TV1', '001', 'usu1', 'usu1', 'eq1', 'eq2');
 
 
 INSERT INTO public.material(
 	id_material, fec_creacion, nombre_largo, presentacion, nombre_corto, fec_actualizacion, flg_anulado, dias_vencimiento, tipo_vencimiento, cod_catmaterial, usu_creacion, usu_actualizacion, equipo_creacion, equipo_actualizacion)
-	VALUES (2,'2022-06-21T00:00:00', 'QUESO EMPAQUETADO', 'QUE EMP', 'QE', '2022-06-21T00:00:00', false, 4, 'TV1', '002', 'usu1', 'usu1', 'eq1', 'eq2');
+	VALUES ('M2','2022-06-21T00:00:00', 'QUESO EMPAQUETADO', 'QUE EMP', 'QE', '2022-06-21T00:00:00', false, 4, 'TV1', '002', 'usu1', 'usu1', 'eq1', 'eq2');
 
 INSERT INTO public.centro(
 	id_centro, fec_creacion, equipo_creacion, equipo_actualizacion, fec_actualizacion, usu_creacion, usu_actualizacion, flg_anulado, centro, id_pais, id_departamento, latitud, longitud)
@@ -27,12 +27,12 @@ INSERT INTO public.centro(
 
 INSERT INTO public.centro_material(
 	id_centro, id_material, fec_creacion, equipo_creacion, equipo_actualizacion, fec_actualizacion, usu_creacion, usu_actualizacion)
-	VALUES ('001', 1, '2022-06-21T00:00:00', 'eq1', 'eq1', '2022-06-21T00:00:00', 'usu1', 'usu2');
+	VALUES ('001', 'M1', '2022-06-21T00:00:00', 'eq1', 'eq1', '2022-06-21T00:00:00', 'usu1', 'usu2');
 
 
 INSERT INTO public.centro_material(
 	id_centro, id_material, fec_creacion, equipo_creacion, equipo_actualizacion, fec_actualizacion, usu_creacion, usu_actualizacion)
-	VALUES ('002', 2, '2022-06-21T00:00:00', 'eq1', 'eq1', '2022-06-21T00:00:00', 'usu1', 'usu1');	
+	VALUES ('002', 'M2', '2022-06-21T00:00:00', 'eq1', 'eq1', '2022-06-21T00:00:00', 'usu1', 'usu1');	
 
 INSERT INTO public.linea(
 	id_linea, equipo_actualizacion, equipo_creacion, fec_actualizacion, fec_creacion, usu_actualizacion, usu_creacion, codificacion, descripcion, flg_anulado, flq_reproceso, id_centro, id_seccion_produccion, limite_inferior, limite_superior, linea, pst_trbjo, time_out_impresion)
@@ -44,6 +44,4 @@ INSERT INTO public.unidad_medida(
 
 INSERT INTO public.unidad_alternativo(
 	id_material, id_unidad_medida, contador, denominador, flg_anulado)
-	VALUES (1, 'U1', 1, 1, false);
-
-	/*PRUEBA 28112022 HOY DIA 2112022*/
+	VALUES ('M1', 'U1', 1, 1, false);
