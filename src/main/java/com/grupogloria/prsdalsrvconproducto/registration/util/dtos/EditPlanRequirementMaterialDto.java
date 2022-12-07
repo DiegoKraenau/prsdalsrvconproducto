@@ -20,7 +20,7 @@ import lombok.experimental.SuperBuilder;
 public class EditPlanRequirementMaterialDto extends EditAuditDto {
 
     @NotNull
-    private Long material;
+    private String material;
 
     @NotNull
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")

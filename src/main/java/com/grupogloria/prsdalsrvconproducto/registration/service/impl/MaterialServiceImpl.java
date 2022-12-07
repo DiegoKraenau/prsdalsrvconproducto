@@ -74,7 +74,7 @@ public class MaterialServiceImpl implements MaterialService {
         }
 
         @Override
-        public ResponseMaterialDto getMaterialById(Long id, HeaderRequest headers) throws Exception {
+        public ResponseMaterialDto getMaterialById(String id, HeaderRequest headers) throws Exception {
                 log.info(
                                 GlobalConstants.HEADER + " - "
                                                 + Thread.currentThread().getStackTrace()[1].getMethodName() + " - "
