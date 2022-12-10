@@ -3,6 +3,7 @@ package com.grupogloria.prsdalsrvconproducto.registration.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.json.JSONObject;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -97,6 +98,55 @@ public class CenterServiceImpl implements CenterService {
                                 })
                                 .collect(Collectors.toList());
 
+        }
+
+        @Override
+        public ResponseCenterDto getCenterById(String id, HeaderRequest headers) throws Exception {
+                log.info(
+                                GlobalConstants.HEADER + " - "
+                                                + Thread.currentThread().getStackTrace()[1].getMethodName()
+                                                + " - "
+                                                + headers.getIdTransaccion() + ": {}",
+                                objMapper.writeValueAsString(headers));
+
+                JSONObject params = new JSONObject();
+                params.put("id", id);
+
+                log.info(
+                                GlobalConstants.PARAMS + " - "
+                                                + Thread.currentThread().getStackTrace()[1].getMethodName()
+                                                + " - "
+                                                + headers.getIdTransaccion() + ": {}",
+                                params);
+                CenterEntity center = centerRepository.findById(id)
+                                .orElseThrow(() -> new Exception("Centro no encontrado con el id : " +
+                                                id));
+                try {
+
+                        ResponseCenterDto response = modelMapper.map(center, ResponseCenterDto.class);
+
+                        log.info(
+                                        GlobalConstants.RESPONSE + " - "
+                                                        + Thread.currentThread().getStackTrace()[1].getMethodName() +
+                                                        " - " + headers.getIdTransaccion() + ": {}",
+                                        objMapper.writeValueAsString(response));
+
+                        return modelMapper.map(center, ResponseCenterDto.class);
+
+                } catch (Exception e) {
+                        log.error(
+                                        GlobalConstants.ERROR + " - "
+                                                        + Thread.currentThread().getStackTrace()[1].getMethodName()
+                                                        + " - "
+                                                        + headers.getIdTransaccion() + ": {}",
+                                        objMapper.writeValueAsString(ManageError
+                                                        .builder()
+                                                        .idTransaccion(headers.getIdTransaccion())
+                                                        .message(e.getMessage())
+                                                        .build()));
+
+                        throw new Exception("Error de data. Por favor probar mas tarde.");
+                }
         }
 
 }

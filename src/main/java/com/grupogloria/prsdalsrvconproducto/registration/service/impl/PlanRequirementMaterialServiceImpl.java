@@ -24,7 +24,7 @@ import com.grupogloria.prsdalsrvconproducto.registration.repository.UnitMeasureR
 import com.grupogloria.prsdalsrvconproducto.registration.service.PlanRequirementMaterialService;
 import com.grupogloria.prsdalsrvconproducto.registration.util.ManageError;
 import com.grupogloria.prsdalsrvconproducto.registration.util.Util;
-import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.EditPlanRequirementMaterialDto;
+import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.RequestEditPlanRequirementMaterialDto;
 import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.RequestPlanRequirementMaterialDto;
 import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.ResponsePlanRequirementMaterialDto;
 
@@ -278,7 +278,7 @@ public class PlanRequirementMaterialServiceImpl implements PlanRequirementMateri
 
         @Override
         public ResponsePlanRequirementMaterialDto updatePlanRequirementMaterial(
-                        EditPlanRequirementMaterialDto updateDto, HeaderRequest headers)
+                        RequestEditPlanRequirementMaterialDto updateDto, HeaderRequest headers)
                         throws Exception {
                 try {
                         log.info(

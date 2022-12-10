@@ -2,6 +2,7 @@ package com.grupogloria.prsdalsrvconproducto.registration.util.dtos;
 
 import java.sql.Timestamp;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -17,22 +18,17 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties
-public class EditPlanRequirementMaterialDto extends EditAuditDto {
+public class RequestEditAuditDto {
 
     @NotNull
-    private String material;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private Timestamp fecActualizacion;
 
     @NotNull
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private Timestamp fecha;
+    @NotEmpty
+    private String usuActualizacion;
 
     @NotNull
-    private String centro;
-
-    @NotNull
-    private String unidadMedida;
-
-    private Integer cantidad;
-
-    private Boolean flgAnulado;
+    @NotEmpty
+    private String equipoActualizacion;
 }

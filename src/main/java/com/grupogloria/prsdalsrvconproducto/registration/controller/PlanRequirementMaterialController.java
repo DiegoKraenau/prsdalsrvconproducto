@@ -24,7 +24,7 @@ import com.grupogloria.prsdalsrvconproducto.registration.domain.PlanRequirementM
 import com.grupogloria.prsdalsrvconproducto.registration.service.PlanRequirementMaterialService;
 import com.grupogloria.prsdalsrvconproducto.registration.util.CustomResponse;
 import com.grupogloria.prsdalsrvconproducto.registration.util.Util;
-import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.EditPlanRequirementMaterialDto;
+import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.RequestEditPlanRequirementMaterialDto;
 import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.RequestPlanRequirementMaterialDto;
 import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.ResponsePlanRequirementMaterialDto;
 
@@ -158,7 +158,7 @@ public class PlanRequirementMaterialController {
 
         @PutMapping("/plan-requirement-material/complex-update")
         public CustomResponse<ResponsePlanRequirementMaterialDto> updatePlanRequirementMaterial(
-                        @Valid @RequestBody EditPlanRequirementMaterialDto dto,
+                        @Valid @RequestBody RequestEditPlanRequirementMaterialDto dto,
                         HttpServletRequest request, HttpServletResponse response,
                         @RequestHeader(required = false, defaultValue = "PE") String pais,
                         @RequestHeader(required = false, defaultValue = "Gloria") String empresa,

@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.grupogloria.prsdalsrvconproducto.registration.controller.request.HeaderRequest;
 import com.grupogloria.prsdalsrvconproducto.registration.domain.PlanRequirementMaterialEntity;
-import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.EditPlanRequirementMaterialDto;
+import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.RequestEditPlanRequirementMaterialDto;
 import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.RequestPlanRequirementMaterialDto;
 import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.ResponsePlanRequirementMaterialDto;
 
@@ -21,6 +21,6 @@ public interface PlanRequirementMaterialService {
                         throws Exception;
 
         ResponsePlanRequirementMaterialDto updatePlanRequirementMaterial(
-                        EditPlanRequirementMaterialDto updateDto, HeaderRequest headers)
+                        RequestEditPlanRequirementMaterialDto updateDto, HeaderRequest headers)
                         throws Exception;
 }

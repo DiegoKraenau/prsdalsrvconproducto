@@ -1,7 +1,6 @@
 package com.grupogloria.prsdalsrvconproducto.registration.controller;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,10 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.grupogloria.prsdalsrvconproducto.registration.constants.GlobalConstants;
 import com.grupogloria.prsdalsrvconproducto.registration.controller.request.HeaderRequest;
-import com.grupogloria.prsdalsrvconproducto.registration.service.CenterService;
+import com.grupogloria.prsdalsrvconproducto.registration.service.LineService;
 import com.grupogloria.prsdalsrvconproducto.registration.util.CustomResponse;
 import com.grupogloria.prsdalsrvconproducto.registration.util.Util;
-import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.ResponseCenterDto;
+import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.ResponseLineDto;
 
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
@@ -27,48 +26,15 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin
-@Api(tags = "Center API")
-public class CenterController {
+@Api(tags = "Linea API")
+public class LineController {
 
     @Autowired
-    private CenterService centerService;
+    private LineService lineService;
 
-    @GetMapping("/center/find-all")
-    public CustomResponse<List<ResponseCenterDto>> getCenters(HttpServletRequest request, HttpServletResponse response,
-            @RequestHeader(required = false, defaultValue = "PE") String pais,
-            @RequestHeader(required = false, defaultValue = "Gloria") String empresa,
-            @RequestHeader(required = false, defaultValue = "Linea") String division,
-            @RequestHeader(required = false, defaultValue = "01") String idTransaccion,
-            @RequestHeader(required = false, defaultValue = "prueba") String aplicacion,
-            @RequestHeader(required = false, defaultValue = "pruebaUser") String usuarioAplicacion,
-            @RequestHeader(required = false) @DateTimeFormat(pattern = GlobalConstants.SIMPLE_DATE_FORMAT) Date fechaEjecucion)
-            throws Exception {
-        HeaderRequest header = new HeaderRequest(pais, empresa, division, idTransaccion, aplicacion, usuarioAplicacion,
-                fechaEjecucion);
-        List<ResponseCenterDto> centers;
-        try {
-            centers = centerService.getAllCenters(header);
-        } catch (Exception e) {
-            response.setStatus(GlobalConstants.INTERNAL_ERROR);
-            return new CustomResponse<>(
-                    GlobalConstants.INTERNAL_ERROR,
-                    Util.getStatusCode(GlobalConstants.INTERNAL_ERROR),
-                    Util.getStatusCodeErrorDescription(GlobalConstants.INTERNAL_ERROR, e.getMessage()),
-                    Util.getAllHeaders(request),
-                    Util.getDate());
-        }
-        return new CustomResponse<>(
-                GlobalConstants.OK,
-                Util.getStatusCode(GlobalConstants.OK),
-                "Listado de Centros",
-                Util.getAllHeaders(request),
-                Util.getDate(),
-                centers);
-    }
-
-    @GetMapping("/center/{id}")
-    public CustomResponse<ResponseCenterDto> getCenterById(HttpServletRequest request, HttpServletResponse response,
-            @PathVariable("id") String id,
+    @GetMapping("/line/{id}")
+    public CustomResponse<ResponseLineDto> getCenterById(HttpServletRequest request, HttpServletResponse response,
+            @PathVariable("id") Long id,
             @RequestHeader(required = false, defaultValue = "PE") String pais,
             @RequestHeader(required = false, defaultValue = "Gloria") String empresa,
             @RequestHeader(required = false, defaultValue = "Linea") String division,
@@ -78,9 +44,9 @@ public class CenterController {
             @RequestHeader(required = false) @DateTimeFormat(pattern = GlobalConstants.SIMPLE_DATE_FORMAT) Date fechaEjecucion) {
         HeaderRequest header = new HeaderRequest(pais, empresa, division, idTransaccion, aplicacion, usuarioAplicacion,
                 fechaEjecucion);
-        ResponseCenterDto centerDto;
+        ResponseLineDto lineDto;
         try {
-            centerDto = centerService.getCenterById(id, header);
+            lineDto = lineService.getLineByID(id, header);
         } catch (Exception e) {
             response.setStatus(GlobalConstants.INTERNAL_ERROR);
             return new CustomResponse<>(
@@ -96,6 +62,6 @@ public class CenterController {
                 "Centro filtrado por Id",
                 Util.getAllHeaders(request),
                 Util.getDate(),
-                centerDto);
+                lineDto);
     }
 }

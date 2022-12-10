@@ -7,4 +7,7 @@ import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.ResponseCente
 
 public interface CenterService {
     List<ResponseCenterDto> getAllCenters(HeaderRequest headers) throws Exception;
+
+    ResponseCenterDto getCenterById(String id, HeaderRequest headers)
+            throws Exception;
 }
