@@ -66,6 +66,10 @@ public class MaterialEntity extends AuditEntity {
     @JsonBackReference
     private List<AlternativeUnitEntity> unidadMedidas;
 
+    @OneToMany(mappedBy = "material", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonBackReference
+    private List<LineMaterialEntity> lineMaterials;
+
     // TODO: Falta hacer relacion con linea
 
 }

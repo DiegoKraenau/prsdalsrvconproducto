@@ -19,6 +19,7 @@ import com.grupogloria.prsdalsrvconproducto.registration.controller.request.Head
 import com.grupogloria.prsdalsrvconproducto.registration.service.MaterialService;
 import com.grupogloria.prsdalsrvconproducto.registration.util.CustomResponse;
 import com.grupogloria.prsdalsrvconproducto.registration.util.Util;
+import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.ResponseLineDto;
 import com.grupogloria.prsdalsrvconproducto.registration.util.dtos.ResponseMaterialDto;
 
 import io.swagger.annotations.Api;
@@ -97,6 +98,39 @@ public class MaterialController {
                 Util.getAllHeaders(request),
                 Util.getDate(),
                 material);
+    }
+
+    @GetMapping("/material/{id}/lines")
+    public CustomResponse<List<ResponseLineDto>> getLinesByMaterialId(HttpServletRequest request, HttpServletResponse response,
+            @PathVariable("id") String id, @RequestHeader(required = false, defaultValue = "PE") String pais,
+            @RequestHeader(required = false, defaultValue = "Gloria") String empresa,
+            @RequestHeader(required = false, defaultValue = "Linea") String division,
+            @RequestHeader(required = false, defaultValue = "01") String idTransaccion,
+            @RequestHeader(required = false, defaultValue = "prueba") String aplicacion,
+            @RequestHeader(required = false, defaultValue = "pruebaUser") String usuarioAplicacion,
+            @RequestHeader(required = false) @DateTimeFormat(pattern = GlobalConstants.SIMPLE_DATE_FORMAT) Date fechaEjecucion)
+            throws Exception {
+        HeaderRequest header = new HeaderRequest(pais, empresa, division, idTransaccion, aplicacion, usuarioAplicacion,
+                fechaEjecucion);
+        List<ResponseLineDto> lines;
+        try {
+            lines = materialService.getLinesByMaterialId(id, header);
+        } catch (Exception e) {
+            response.setStatus(503);
+            return new CustomResponse<>(
+                    GlobalConstants.INTERNAL_ERROR,
+                    Util.getStatusCode(GlobalConstants.INTERNAL_ERROR),
+                    Util.getStatusCodeErrorDescription(GlobalConstants.INTERNAL_ERROR, e.getMessage()),
+                    Util.getAllHeaders(request),
+                    Util.getDate());
+        }
+        return new CustomResponse<>(
+                GlobalConstants.OK,
+                Util.getStatusCode(GlobalConstants.OK),
+                "Lineas por el Material Id",
+                Util.getAllHeaders(request),
+                Util.getDate(),
+                lines);
     }
 
 }
