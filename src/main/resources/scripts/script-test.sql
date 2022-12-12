@@ -46,5 +46,11 @@ INSERT INTO public.unidad_alternativo(
 	id_material, id_unidad_medida, contador, denominador, flg_anulado)
 	VALUES ('M1', 'U1', 1, 1, false);
 
+INSERT INTO public.material_linea(
+	id_centro, id_linea, id_material, equipo_actualizacion,equipo_creacion, fec_actualizacion, fec_creacion, usu_actualizacion, usu_creacion, desc_version, flg_anulado, presentacion, pst_trab, velocidad, version)
+	VALUES ('001', 1, 'M1', 'eq1', 'eq1', 
+			'2022-10-10T12:00:00', '2022-10-10T12:00:00', 'usu1', 'usu1', 
+			'version1', true, 'presentacion', 'pst', 10, '1');
+
 
 /*PRUEBA 07122022*/

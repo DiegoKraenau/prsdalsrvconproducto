@@ -1,5 +1,6 @@
 package com.grupogloria.prsdalsrvconproducto.registration.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -146,7 +147,7 @@ public class MaterialServiceImpl implements MaterialService {
                                                 id));
 
                 try {
-                        List<ResponseLineDto> response = null;
+                        List<ResponseLineDto> response = new ArrayList<ResponseLineDto>();
 
                         material.getLineMaterials().forEach(lineMaterial -> {
                                 response.add(modelMapper.map(lineMaterial.getLinea(), ResponseLineDto.class));
