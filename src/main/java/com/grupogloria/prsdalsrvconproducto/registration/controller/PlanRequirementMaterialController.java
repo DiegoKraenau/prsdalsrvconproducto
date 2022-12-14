@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -156,8 +157,9 @@ public class PlanRequirementMaterialController {
                                 planRequirementMaterials);
         }
 
-        @PutMapping("/plan-requirement-material/complex-update")
+        @PutMapping("/plan-requirement-material/{id}")
         public CustomResponse<ResponsePlanRequirementMaterialDto> updatePlanRequirementMaterial(
+                        @PathVariable("id") Long id,
                         @Valid @RequestBody RequestEditPlanRequirementMaterialDto dto,
                         HttpServletRequest request, HttpServletResponse response,
                         @RequestHeader(required = false, defaultValue = "PE") String pais,
@@ -172,7 +174,7 @@ public class PlanRequirementMaterialController {
                                 fechaEjecucion);
                 ResponsePlanRequirementMaterialDto planRequirementMaterial;
                 try {
-                        planRequirementMaterial = planRequirementMaterialService.updatePlanRequirementMaterial(dto,
+                        planRequirementMaterial = planRequirementMaterialService.updatePlanRequirementMaterial(id, dto,
                                         header);
                 } catch (Exception e) {
                         response.setStatus(GlobalConstants.INTERNAL_ERROR);
@@ -193,4 +195,41 @@ public class PlanRequirementMaterialController {
                                 planRequirementMaterial);
         }
 
+        @GetMapping("/plan-requirement-material/{id}")
+        public CustomResponse<ResponsePlanRequirementMaterialDto> getPlanRequirementMaterialById(
+                        @PathVariable("id") Long id,
+                        HttpServletRequest request, HttpServletResponse response,
+                        @RequestHeader(required = false, defaultValue = "PE") String pais,
+                        @RequestHeader(required = false, defaultValue = "Gloria") String empresa,
+                        @RequestHeader(required = false, defaultValue = "Linea") String division,
+                        @RequestHeader(required = false, defaultValue = "01") String idTransaccion,
+                        @RequestHeader(required = false, defaultValue = "prueba") String aplicacion,
+                        @RequestHeader(required = false, defaultValue = "pruebaUser") String usuarioAplicacion,
+                        @RequestHeader(required = false) @DateTimeFormat(pattern = GlobalConstants.SIMPLE_DATE_FORMAT) Date fechaEjecucion)
+                        throws Exception {
+                HeaderRequest header = new HeaderRequest(pais, empresa, division, idTransaccion, aplicacion,
+                                usuarioAplicacion,
+                                fechaEjecucion);
+                ResponsePlanRequirementMaterialDto planRequirementMaterial;
+                try {
+                        planRequirementMaterial = planRequirementMaterialService
+                                        .getPlanRequierementMaterialById(id, header);
+                } catch (Exception e) {
+                        response.setStatus(GlobalConstants.INTERNAL_ERROR);
+                        return new CustomResponse<>(
+                                        GlobalConstants.INTERNAL_ERROR,
+                                        Util.getStatusCode(GlobalConstants.INTERNAL_ERROR),
+                                        Util.getStatusCodeErrorDescription(GlobalConstants.INTERNAL_ERROR,
+                                                        e.getMessage()),
+                                        Util.getAllHeaders(request),
+                                        Util.getDate());
+                }
+                return new CustomResponse<>(
+                                GlobalConstants.OK,
+                                Util.getStatusCode(GlobalConstants.OK),
+                                "Plan Requerimiento Material por Id",
+                                Util.getAllHeaders(request),
+                                Util.getDate(),
+                                planRequirementMaterial);
+        }
 }

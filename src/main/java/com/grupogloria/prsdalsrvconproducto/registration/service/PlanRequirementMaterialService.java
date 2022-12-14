@@ -20,7 +20,10 @@ public interface PlanRequirementMaterialService {
                         String fechaFin, String centroId, HeaderRequest headers)
                         throws Exception;
 
-        ResponsePlanRequirementMaterialDto updatePlanRequirementMaterial(
+        ResponsePlanRequirementMaterialDto updatePlanRequirementMaterial(Long id,
                         RequestEditPlanRequirementMaterialDto updateDto, HeaderRequest headers)
+                        throws Exception;
+
+        ResponsePlanRequirementMaterialDto getPlanRequierementMaterialById(Long id, HeaderRequest headers)
                         throws Exception;
 }

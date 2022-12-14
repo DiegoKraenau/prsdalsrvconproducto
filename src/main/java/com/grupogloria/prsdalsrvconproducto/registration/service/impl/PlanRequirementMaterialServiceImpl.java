@@ -275,7 +275,7 @@ public class PlanRequirementMaterialServiceImpl implements PlanRequirementMateri
         }
 
         @Override
-        public ResponsePlanRequirementMaterialDto updatePlanRequirementMaterial(
+        public ResponsePlanRequirementMaterialDto updatePlanRequirementMaterial(Long id,
                         RequestEditPlanRequirementMaterialDto updateDto, HeaderRequest headers)
                         throws Exception {
                 try {
@@ -297,10 +297,9 @@ public class PlanRequirementMaterialServiceImpl implements PlanRequirementMateri
                                         params);
 
                         PlanRequirementMaterialEntity plantRequirementMaterial = planRequirementMaterialRepository
-                                        .findOneByFilter(updateDto.getMaterial(), updateDto.getFecha(),
-                                                        updateDto.getCentro(), updateDto.getUnidadMedida())
+                                        .findById(id)
                                         .orElseThrow(() -> new Exception(
-                                                        "Plan Requerimiento Material no encontrado con los filtros."));
+                                                        "Plan Requerimiento Material no encontrado."));
 
                         Util.copyNonNullProperties(updateDto, plantRequirementMaterial);
                         plantRequirementMaterial = planRequirementMaterialRepository
@@ -317,6 +316,71 @@ public class PlanRequirementMaterialServiceImpl implements PlanRequirementMateri
                         res.setCentroId(plantRequirementMaterial.getCentro().getIdCentro());
                         res.setNombreCentro(plantRequirementMaterial.getCentro().getCentro());
                         res.setUnidadMedida(plantRequirementMaterial.getUnidadMedida().getUnidadMedida());
+
+                        log.info(
+                                        GlobalConstants.RESPONSE + " - "
+                                                        + Thread.currentThread().getStackTrace()[1].getMethodName() +
+                                                        " - " + headers.getIdTransaccion() + ": {}",
+                                        objMapper.writeValueAsString(res));
+
+                        return res;
+
+                } catch (Exception e) {
+                        log.error(
+                                        GlobalConstants.ERROR + " - "
+                                                        + Thread.currentThread().getStackTrace()[1].getMethodName()
+                                                        + " - "
+                                                        + headers.getIdTransaccion() + ": {}",
+                                        objMapper.writeValueAsString(ManageError
+                                                        .builder()
+                                                        .idTransaccion(headers.getIdTransaccion())
+                                                        .message(e.getMessage())
+                                                        .build()));
+
+                        throw new Exception("Error de data. Por favor probar mas tarde.");
+                }
+        }
+
+        @Override
+        public ResponsePlanRequirementMaterialDto getPlanRequierementMaterialById(Long id, HeaderRequest headers)
+                        throws Exception {
+                log.info(
+                                GlobalConstants.HEADER + " - "
+                                                + Thread.currentThread().getStackTrace()[1].getMethodName()
+                                                + " - "
+                                                + headers.getIdTransaccion() + ": {}",
+                                objMapper.writeValueAsString(headers));
+
+                JSONObject params = new JSONObject();
+                params.put("id", new JSONObject(id));
+
+                log.info(
+                                GlobalConstants.PARAMS + " - "
+                                                + Thread.currentThread().getStackTrace()[1].getMethodName()
+                                                + " - "
+                                                + headers.getIdTransaccion() + ": {}",
+                                params);
+
+                PlanRequirementMaterialEntity plantRequirementMaterial = planRequirementMaterialRepository
+                                .findById(id)
+                                .orElseThrow(() -> new Exception(
+                                                "Plan Requerimiento Material no encontrado."));
+                try {
+
+                        ResponsePlanRequirementMaterialDto res = modelMapper.map(plantRequirementMaterial,
+                                        ResponsePlanRequirementMaterialDto.class);
+
+                        res.setFamiliaProducto(
+                                        plantRequirementMaterial.getMaterial()
+                                                        .getCategoriaMaterial()
+                                                        .getCodCatMaterial());
+                        res.setNombreProducto(
+                                        plantRequirementMaterial.getMaterial().getNombreCorto());
+                        res.setProductoId(plantRequirementMaterial.getMaterial().getId());
+                        res.setCentroId(plantRequirementMaterial.getCentro().getIdCentro());
+                        res.setNombreCentro(plantRequirementMaterial.getCentro().getCentro());
+                        res.setUnidadMedida(plantRequirementMaterial.getUnidadMedida()
+                                        .getUnidadMedida());
 
                         log.info(
                                         GlobalConstants.RESPONSE + " - "

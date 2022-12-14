@@ -17,6 +17,8 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties
 public class ResponsePlanRequirementMaterialDto {
 
+    private Long idPlan;
+
     private String productoId;
 
     private String nombreProducto;

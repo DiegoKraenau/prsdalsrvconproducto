@@ -19,19 +19,6 @@ import lombok.experimental.SuperBuilder;
 @JsonIgnoreProperties
 public class RequestEditPlanRequirementMaterialDto extends RequestEditAuditDto {
 
-    @NotNull
-    private String material;
-
-    @NotNull
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private Timestamp fecha;
-
-    @NotNull
-    private String centro;
-
-    @NotNull
-    private String unidadMedida;
-
     private Integer cantidad;
 
     private Boolean flgAnulado;
