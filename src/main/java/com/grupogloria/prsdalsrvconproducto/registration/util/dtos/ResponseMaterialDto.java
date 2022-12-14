@@ -22,6 +22,8 @@ public class ResponseMaterialDto {
 
     private String nombreCorto;
 
+    private String idMaterialCs;
+
     private String presentacion;
 
     private Integer diasVencimiento;

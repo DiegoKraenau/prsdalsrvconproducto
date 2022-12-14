@@ -8,13 +8,13 @@ INSERT INTO public.categoria_material(
 
 
 INSERT INTO public.material(
-	id_material, fec_creacion, nombre_largo, presentacion, nombre_corto, fec_actualizacion, flg_anulado, dias_vencimiento, tipo_vencimiento, cod_catmaterial, usu_creacion, usu_actualizacion, equipo_creacion, equipo_actualizacion)
-	VALUES ('M1','2022-06-21T00:00:00', 'LECHE TARRO', 'LEC TAR', 'LT', '2022-06-21T00:00:00', false, 4, 'TV1', '001', 'usu1', 'usu1', 'eq1', 'eq2');
+	id_material, fec_creacion, nombre_largo, presentacion, nombre_corto, fec_actualizacion, flg_anulado, dias_vencimiento, tipo_vencimiento, cod_catmaterial, usu_creacion, usu_actualizacion, equipo_creacion, equipo_actualizacion, id_material_cs)
+	VALUES ('M1','2022-06-21T00:00:00', 'LECHE TARRO', 'LEC TAR', 'LT', '2022-06-21T00:00:00', false, 4, 'TV1', '001', 'usu1', 'usu1', 'eq1', 'eq2', 'Test material id');
 
 
 INSERT INTO public.material(
-	id_material, fec_creacion, nombre_largo, presentacion, nombre_corto, fec_actualizacion, flg_anulado, dias_vencimiento, tipo_vencimiento, cod_catmaterial, usu_creacion, usu_actualizacion, equipo_creacion, equipo_actualizacion)
-	VALUES ('M2','2022-06-21T00:00:00', 'QUESO EMPAQUETADO', 'QUE EMP', 'QE', '2022-06-21T00:00:00', false, 4, 'TV1', '002', 'usu1', 'usu1', 'eq1', 'eq2');
+	id_material, fec_creacion, nombre_largo, presentacion, nombre_corto, fec_actualizacion, flg_anulado, dias_vencimiento, tipo_vencimiento, cod_catmaterial, usu_creacion, usu_actualizacion, equipo_creacion, equipo_actualizacion, id_material_cs)
+	VALUES ('M2','2022-06-21T00:00:00', 'QUESO EMPAQUETADO', 'QUE EMP', 'QE', '2022-06-21T00:00:00', false, 4, 'TV1', '002', 'usu1', 'usu1', 'eq1', 'eq2', 'Test material id');
 
 INSERT INTO public.centro(
 	id_centro, fec_creacion, equipo_creacion, equipo_actualizacion, fec_actualizacion, usu_creacion, usu_actualizacion, flg_anulado, centro, id_pais, id_departamento, latitud, longitud)

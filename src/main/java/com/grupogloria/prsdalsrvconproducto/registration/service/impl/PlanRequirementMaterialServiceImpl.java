@@ -16,7 +16,6 @@ import com.grupogloria.prsdalsrvconproducto.registration.domain.CenterEntity;
 import com.grupogloria.prsdalsrvconproducto.registration.domain.MaterialEntity;
 import com.grupogloria.prsdalsrvconproducto.registration.domain.PlanRequirementMaterialEntity;
 import com.grupogloria.prsdalsrvconproducto.registration.domain.UnitMeasureEntity;
-import com.grupogloria.prsdalsrvconproducto.registration.domain.helpers.PlanRequirementMaterialId;
 import com.grupogloria.prsdalsrvconproducto.registration.repository.CenterRepository;
 import com.grupogloria.prsdalsrvconproducto.registration.repository.MaterialRepository;
 import com.grupogloria.prsdalsrvconproducto.registration.repository.PlanRequirementMaterialRepository;
@@ -87,9 +86,8 @@ public class PlanRequirementMaterialServiceImpl implements PlanRequirementMateri
                                                 registerDto.getUnidadMedidaId()));
 
                 if (planRequirementMaterialRepository
-                                .findById(PlanRequirementMaterialId.builder().material(registerDto.getMaterialId())
-                                                .fecha(registerDto.getFecha()).centro(center.getIdCentro())
-                                                .unidadMedida(unitMeasure.getIdUnidadMedida()).build())
+                                .findOneByFilter(registerDto.getMaterialId(), registerDto.getFecha(),
+                                                registerDto.getCentroId(), registerDto.getUnidadMedidaId())
                                 .isPresent()) {
                         throw new Exception("Plan de Requerimiento de Material existe");
                 }
@@ -297,13 +295,13 @@ public class PlanRequirementMaterialServiceImpl implements PlanRequirementMateri
                                                         + " - "
                                                         + headers.getIdTransaccion() + ": {}",
                                         params);
+
                         PlanRequirementMaterialEntity plantRequirementMaterial = planRequirementMaterialRepository
-                                        .getOne(PlanRequirementMaterialId.builder()
-                                                        .centro(updateDto.getCentro())
-                                                        .fecha(updateDto.getFecha())
-                                                        .material(updateDto.getMaterial())
-                                                        .unidadMedida(updateDto.getUnidadMedida())
-                                                        .build());
+                                        .findOneByFilter(updateDto.getMaterial(), updateDto.getFecha(),
+                                                        updateDto.getCentro(), updateDto.getUnidadMedida())
+                                        .orElseThrow(() -> new Exception(
+                                                        "Plan Requerimiento Material no encontrado con los filtros."));
+
                         Util.copyNonNullProperties(updateDto, plantRequirementMaterial);
                         plantRequirementMaterial = planRequirementMaterialRepository
                                         .save(plantRequirementMaterial);

@@ -42,6 +42,9 @@ public class MaterialEntity extends AuditEntity {
     @Column(name = "nombre_corto", nullable = false)
     private String nombreCorto;
 
+    @Column(name = "id_material_cs", nullable = false)
+    private String idMaterialCs;
+
     @Column(name = "presentacion", nullable = false)
     private String presentacion;
 
