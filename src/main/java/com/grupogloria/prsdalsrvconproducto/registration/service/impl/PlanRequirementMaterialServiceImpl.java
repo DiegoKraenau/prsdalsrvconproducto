@@ -14,11 +14,13 @@ import com.grupogloria.prsdalsrvconproducto.registration.constants.GlobalConstan
 import com.grupogloria.prsdalsrvconproducto.registration.controller.request.HeaderRequest;
 import com.grupogloria.prsdalsrvconproducto.registration.domain.CenterEntity;
 import com.grupogloria.prsdalsrvconproducto.registration.domain.MaterialEntity;
+import com.grupogloria.prsdalsrvconproducto.registration.domain.PlanRequirementEntity;
 import com.grupogloria.prsdalsrvconproducto.registration.domain.PlanRequirementMaterialEntity;
 import com.grupogloria.prsdalsrvconproducto.registration.domain.UnitMeasureEntity;
 import com.grupogloria.prsdalsrvconproducto.registration.repository.CenterRepository;
 import com.grupogloria.prsdalsrvconproducto.registration.repository.MaterialRepository;
 import com.grupogloria.prsdalsrvconproducto.registration.repository.PlanRequirementMaterialRepository;
+import com.grupogloria.prsdalsrvconproducto.registration.repository.PlanRequirementRepository;
 import com.grupogloria.prsdalsrvconproducto.registration.repository.UnitMeasureRepository;
 import com.grupogloria.prsdalsrvconproducto.registration.service.PlanRequirementMaterialService;
 import com.grupogloria.prsdalsrvconproducto.registration.util.ManageError;
@@ -44,6 +46,9 @@ public class PlanRequirementMaterialServiceImpl implements PlanRequirementMateri
 
         @Autowired
         private UnitMeasureRepository unitMeasureRepository;
+
+        @Autowired
+        private PlanRequirementRepository planRequirementRepository;
 
         @Autowired
         private ModelMapper modelMapper;
@@ -95,6 +100,20 @@ public class PlanRequirementMaterialServiceImpl implements PlanRequirementMateri
                 try {
                         Calendar cal = Calendar.getInstance();
                         cal.setTimeInMillis(registerDto.getFecha().getTime());
+
+                        planRequirementRepository.save(PlanRequirementEntity
+                                        .builder()
+                                        .center(center)
+                                        .descripcion(null)
+                                        .fecha(registerDto.getFecha())
+                                        .flgAnulado(false)
+                                        .fecCreacion(registerDto.getFecCreacion())
+                                        .fecActualizacion(registerDto.getFecActualizacion())
+                                        .usuCreacion(registerDto.getUsuCreacion())
+                                        .usuActualizacion(registerDto.getUsuActualizacion())
+                                        .equipoCreacion(registerDto.getEquipoCreacion())
+                                        .equipoActualizacion(registerDto.getEquipoActualizacion())
+                                        .build());
 
                         PlanRequirementMaterialEntity planRequirementMaterialRegistered = planRequirementMaterialRepository
                                         .save(PlanRequirementMaterialEntity.builder()
